@@ -11,48 +11,63 @@
 # **************************************************************************** #
 
 NAME = line
+
 CC = clang
-SDL = SDL2-2.0.5
-CFLAGS = -lSDL2 -lSDL2_ttf -lSDL2_image
-FLAGS = -Weverything -g
+
+CFLAGS = -Weverything -g
+
+SDL = $(shell sdl2-config --libs)
+
+LDFLAGS = $(SDL) -lSDL2 -lSDL2_ttf -lSDL2_image
+
 CPATH = src/
+
+CFILES = \
+	close.c \
+	draw.c \
+	init_res.c \
+	loop.c \
+	main.c \
+	mouse.c \
+	tab.c \
+	texture.c
+
 OPATH = obj/
-HPATH = inc/
-INC = $(addprefix -I , $(HPATH))
-CFILES = main.c\
-				 draw.c\
-				 tab.c\
-				 texture.c\
-				 loop.c\
-				 mouse.c\
-				 init_res.c\
-				 close.c
+
 OFILES = $(CFILES:.c=.o)
-HFILES = inc/inc.h\
-				 inc/image.h\
-				 inc/texture.h\
-				 inc/event.h\
-				 inc/res.h
+
 OBJ = $(addprefix $(OPATH), $(OFILES))
 
-.PHONY: all clean fclean re
+HPATH = inc/
+
+HFILES = \
+	inc/event.h \
+	inc/image.h \
+	inc/inc.h \
+	inc/res.h \
+	inc/texture.h
+
+INC = $(addprefix -I , $(HPATH))
+
+LDHEADERS = $(shell sdl2-config --cflags)
+
+.PHONY: all install clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-		$(CC) $(OBJ) $(FLAGS) $(CFLAGS) -o $(NAME)
+$(NAME): $(OPATH) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(NAME)
 
-install :
-		./install_sdl.sh
+$(OPATH):
+	mkdir -p $(OPATH)
 
 $(OPATH)%.o: $(CPATH)%.c $(HFILES)
-		mkdir -p $(OPATH)
-		$(CC) $(FLAGS) $(INC) $< -c -o $@
+	$(CC) $(CFLAGS) $(INC) $(LDHEADERS) -c -o $@ $<
 
 clean:
-		rm -f $(OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
-		rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
