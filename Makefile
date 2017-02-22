@@ -16,9 +16,9 @@ CC = clang
 
 CFLAGS = -Weverything -g
 
-SDL = $(shell sdl2-config --libs)
+LDFLAGS = $(shell sdl2-config --libs) -lSDL2 -lSDL2_ttf -lSDL2_image
 
-LDFLAGS = $(SDL) -lSDL2 -lSDL2_ttf -lSDL2_image
+LDHEADERS = $(shell sdl2-config --cflags)
 
 CPATH = src/
 
@@ -48,8 +48,6 @@ HFILES = \
 	inc/texture.h
 
 INC = $(addprefix -I , $(HPATH))
-
-LDHEADERS = $(shell sdl2-config --cflags)
 
 .PHONY: all install clean fclean re
 
