@@ -14,9 +14,9 @@ NAME = line
 
 CC = clang
 
-SDL = $(shell sdl2-config --libs)
+CFLAGS = -Weverything -g
 
-CFLAGS = -Weverything $(shell sdl2-config --cflags) -g
+SDL = $(shell sdl2-config --libs)
 
 LDFLAGS = $(SDL) -lSDL2 -lSDL2_ttf -lSDL2_image
 
@@ -49,6 +49,8 @@ HFILES = \
 
 INC = $(addprefix -I , $(HPATH))
 
+LDHEADERS = $(shell sdl2-config --cflags)
+
 .PHONY: all install clean fclean re
 
 all: $(NAME)
@@ -63,7 +65,7 @@ install :
 	./install_sdl.sh
 
 $(OPATH)%.o: $(CPATH)%.c $(HFILES)
-	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INC) $(LDHEADERS) -c -o $@ $<
 
 clean:
 	rm -f $(OBJ)
