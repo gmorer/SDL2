@@ -16,9 +16,9 @@ CC = clang
 
 CFLAGS = -Weverything -g
 
-LDFLAGS = $(shell sdl2-config --libs) -lSDL2 -lSDL2_ttf -lSDL2_image
+LDLIBS = $(shell sdl2-config --libs) -lSDL2 -lSDL2_ttf -lSDL2_image
 
-LDHEADERS = $(shell sdl2-config --cflags)
+LDFLAGS = $(shell sdl2-config --cflags)
 
 CPATH = src/
 
@@ -54,13 +54,13 @@ INC = $(addprefix -I , $(HPATH))
 all: $(NAME)
 
 $(NAME): $(OPATH) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LDLIBS) -o $(NAME)
 
 $(OPATH):
 	mkdir -p $(OPATH)
 
 $(OPATH)%.o: $(CPATH)%.c $(HFILES)
-	$(CC) $(CFLAGS) $(INC) $(LDHEADERS) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INC) $(LDFLAGS) -c -o $@ $<
 
 clean:
 	rm -f $(OBJ)
