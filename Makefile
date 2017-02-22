@@ -61,9 +61,6 @@ $(NAME): $(OPATH) $(OBJ)
 $(OPATH):
 	mkdir -p $(OPATH)
 
-install :
-	./install_sdl.sh
-
 $(OPATH)%.o: $(CPATH)%.c $(HFILES)
 	$(CC) $(CFLAGS) $(INC) $(LDHEADERS) -c -o $@ $<
 
