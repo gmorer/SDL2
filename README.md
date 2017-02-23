@@ -6,6 +6,12 @@
 - SDL2\_ttf
 - SDL2\_image
 
+### Ubuntu
+
+```
+sudo apt install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev
+```
+
 ## Installation
 
 ```
