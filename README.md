@@ -10,7 +10,13 @@
 
 ```
 sudo apt update
-sudo apt install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev
+sudo apt install libsdl2-dev sdl2_ttf sdl2_image
+```
+
+### ArchLinux
+
+```
+sudo pacman -S sdl2 sdl2_ttf sdl2_image
 ```
 
 ## Installation
