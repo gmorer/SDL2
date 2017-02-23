@@ -6,7 +6,7 @@
 - SDL2\_ttf
 - SDL2\_image
 
-### Ubuntu
+### - Ubuntu
 
 ```sh
 sudo apt update
@@ -30,7 +30,7 @@ sudo apt update
 sudo apt install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev
 ```
 
-### ArchLinux
+### - ArchLinux
 
 ```sh
 sudo pacman -S sdl2 sdl2_ttf sdl2_image
