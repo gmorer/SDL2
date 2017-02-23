@@ -14,4 +14,4 @@ git clone https://github.com/gmorer/SDL2.git && cd SDL2 && make
 
 ## License
 
-Released under the terms of the permissive [MIT license](LICENSE)
+Released under the terms of the permissive [MIT license](LICENSE).
