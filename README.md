@@ -1,5 +1,11 @@
 # SDL2
 
+## Dependencies
+
+- SDL2
+- SDL2\_ttf
+- SDL2\_image
+
 ## Installation
 
 ```
