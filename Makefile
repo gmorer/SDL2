@@ -14,7 +14,7 @@ NAME = line
 
 CC = clang
 
-CFLAGS = -Weverything -g
+CFLAGS = -Werror -Wall -Wextra
 
 LDLIBS = $(shell sdl2-config --libs) -lSDL2 -lSDL2_ttf -lSDL2_image
 
