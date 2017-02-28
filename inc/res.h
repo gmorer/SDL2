@@ -8,6 +8,7 @@ enum {
 	C,
 	SELECTED,
 	PNG,
+	MAP,
 	RES_LEN
 };
 

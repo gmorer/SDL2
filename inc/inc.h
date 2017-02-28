@@ -12,13 +12,14 @@
 # include <SDL2/SDL_image.h>
 # include "res.h"
 # include "image.h"
+# include "player.h"
 
 extern SDL_Window *g_window;
 extern SDL_Renderer *g_renderer;
 extern TTF_Font *g_font;
 
 int		draw(t_image *button_tab[IMAGE_LEN]);
-void	loop(void) __attribute__((noreturn));
+void	loop(t_player *player) __attribute__((noreturn));
 void	close_all(t_image *image_tab[IMAGE_LEN]) __attribute__((noreturn));	
 void	delet_one_image(t_image *image_tab[IMAGE_LEN], int i);
 

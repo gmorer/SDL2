@@ -2,6 +2,7 @@
 # define BUTTON_H
 
 # include "texture.h"
+# include "player.h"
 
 # define IMAGE_LEN 50
 
@@ -16,12 +17,12 @@ typedef struct s_image
 	SDL_Rect			coord;
 	t_texture			*texture;
 	t_texture			*texture_after;
-	int						(*function)(struct s_image *image_tab[IMAGE_LEN]);
+	int						(*function)(struct s_image *image_tab[IMAGE_LEN], t_player *player);
 	int						is_on;
 	int						type;
 }              t_image;
 
 void  add_image(t_image *image_tab[IMAGE_LEN], SDL_Rect coord, t_texture *texture,
-		    t_texture *texture_after, int (*function)(t_image *image_tab[IMAGE_LEN]), int is_interactive);
+		    t_texture *texture_after, int (*function)(t_image *image_tab[IMAGE_LEN], t_player *player), int is_interactive);
 
 #endif

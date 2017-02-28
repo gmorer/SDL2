@@ -1,7 +1,7 @@
 #include "inc.h"
 #include "event.h"
 
-void		mouse_event(SDL_Event *event, t_image *image_tab[IMAGE_LEN])
+void		mouse_event(SDL_Event *event, t_image *image_tab[IMAGE_LEN], t_player *player)
 {
 	int				i;
 
@@ -22,7 +22,7 @@ void		mouse_event(SDL_Event *event, t_image *image_tab[IMAGE_LEN])
 					event->button.y <= image_tab[i]->coord.y + image_tab[i]->coord.h)
 				{
 		//			printf("i = %d\n", i);
-					image_tab[i]->function(image_tab);
+					image_tab[i]->function(image_tab, player);
 					break;
 				}
 			i--;

@@ -1,5 +1,6 @@
 #include "inc.h"
 #include "res.h"
+#include "player.h"
 #include <stdio.h>
 
 SDL_Window    *g_window;
@@ -36,13 +37,21 @@ static int  init_SDL(void)
 
 int   main(int argc, char **argv)
 {
+	t_player	*player;
   (void)argc;
   (void)argv;
+	srand(time(NULL));
   if (!init_SDL())
   {
     write(2, "error during initialisation\n", 28);
     return (1);
   }
+	player = init_player();
+	if (!player)
+	{
+		write(2, "error during player initialisation\n", 35);
+		return (1);
+	}
 	init_res();
-  loop();
+  loop(player);
 }

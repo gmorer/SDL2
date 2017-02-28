@@ -2,7 +2,7 @@
 #include "image.h"
 
 void  add_image(t_image *image_tab[IMAGE_LEN], SDL_Rect coord, t_texture *texture,
-    t_texture *texture_after, int (*function)(t_image *image_tab[IMAGE_LEN]), int type)
+    t_texture *texture_after, int (*function)(t_image *image_tab[IMAGE_LEN], t_player *player), int type)
 {
 	t_image	*rslt;
 	int			i;

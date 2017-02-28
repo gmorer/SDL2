@@ -30,7 +30,8 @@ CFILES = \
 	main.c \
 	mouse.c \
 	tab.c \
-	texture.c
+	texture.c \
+	init_player.c
 
 OPATH = obj/
 
@@ -45,7 +46,8 @@ HFILES = \
 	inc/image.h \
 	inc/inc.h \
 	inc/res.h \
-	inc/texture.h
+	inc/texture.h \
+	inc/player.h
 
 INC = $(addprefix -I , $(HPATH))
 
