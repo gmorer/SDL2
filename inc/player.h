@@ -11,8 +11,10 @@ typedef struct	s_fcoord
 typedef struct	s_player
 {
 	t_fcoord				coord;
+	t_fcoord				dest;
 }								t_player;
 
 t_player	*init_player();
+void			move_player();
 
 #endif

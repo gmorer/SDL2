@@ -8,12 +8,11 @@ void		mouse_event(SDL_Event *event, t_image *image_tab[IMAGE_LEN], t_player *pla
 	i = IMAGE_LEN - 1;
 	while (i && image_tab[i] == NULL)
 		i--;
-	//printf("i = %d\n", i);
-	if(i == 0)
-		write(1, "lol", 3);
 	if (event->type == SDL_MOUSEBUTTONUP &&
 			event->button.button == SDL_BUTTON_LEFT && event->button.state == SDL_RELEASED)
 	{
+		player->dest.x = event->button.x - SCREEN_X / 2 + player->coord.x;
+		player->dest.y = event->button.y - SCREEN_Y / 2 + player->coord.y;
 		while (i && image_tab[i])
 		{
 			if (image_tab[i]->type == BUTTON && event->button.x >= image_tab[i]->coord.x &&
@@ -21,7 +20,6 @@ void		mouse_event(SDL_Event *event, t_image *image_tab[IMAGE_LEN], t_player *pla
 					event->button.y >= image_tab[i]->coord.y &&
 					event->button.y <= image_tab[i]->coord.y + image_tab[i]->coord.h)
 				{
-		//			printf("i = %d\n", i);
 					image_tab[i]->function(image_tab, player);
 					break;
 				}

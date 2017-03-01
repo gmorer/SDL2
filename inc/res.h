@@ -9,6 +9,7 @@ enum {
 	SELECTED,
 	PNG,
 	MAP,
+	HERO,
 	RES_LEN
 };
 

@@ -27,21 +27,17 @@ static int						yolo_play(t_image *image_tab[IMAGE_LEN], t_player *player)
 	while (image_tab[i])
 		i++;
 	i -= 1;
-	while(i >= 1)
+	while(i >= 0)
 	{
 		delet_one_image(image_tab, i);
 		i--;
 	}
-	x = (g_res[MAP]->src.w - SCREEN_X) / 2;	
-	y = (g_res[MAP]->src.h - SCREEN_Y) / 2;	
-	if (player->coord.x >= 0 || player->coord.x <= g_res[MAP]->src.h ||
-			player->coord.y >= 0 || player->coord.y <= g_res[MAP]->src.w)
-	{
-		x += player->coord.x;
-		y += player->coord.y;
-	}
+	x = player->coord.x - (SCREEN_X / 2);	
+	y = player->coord.y - (SCREEN_Y / 2);	
 	add_image(image_tab, (SDL_Rect){-x, -y, g_res[MAP]->src.w, g_res[MAP]->src.h},
 	    g_res[MAP], NULL, NULL, IMAGE);
+	add_image(image_tab, (SDL_Rect){SCREEN_X / 2, SCREEN_Y / 2, 50, 50},
+	    g_res[HERO], NULL, NULL, IMAGE);
 	return (1);
 }
 static int						yolo_exit(t_image *image_tab[IMAGE_LEN], t_player *player)
@@ -92,6 +88,7 @@ void    loop(t_player *player)
 			mouse_event(&event, image_tab, player);
 		}
 		SDL_RenderClear(g_renderer);
+		move_player(image_tab, player);
 		draw(image_tab);
 		SDL_RenderPresent(g_renderer);
 	}

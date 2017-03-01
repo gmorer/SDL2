@@ -4,6 +4,7 @@
 # define SCREEN_Y 480
 
 # include <unistd.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <time.h>

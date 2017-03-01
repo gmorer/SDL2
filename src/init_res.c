@@ -16,6 +16,7 @@ void		init_res(void)
 	g_res[C] = load_bmp("res/c.bmp");
 	g_res[PNG] = load_png("res/png.png");
 	g_res[MAP] = load_png("res/map.png");
+	g_res[HERO] = load_png("res/hero.png");
 	g_res[SELECTED] = load_bmp("res/selected.bmp");
 	return ;
 }

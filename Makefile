@@ -16,7 +16,7 @@ CC = clang
 
 CFLAGS = -Werror -Wall -Wextra
 
-LDLIBS = $(shell sdl2-config --libs) -lSDL2 -lSDL2_ttf -lSDL2_image
+LDLIBS = $(shell sdl2-config --libs) -lSDL2 -lSDL2_ttf -lSDL2_image -lm
 
 LDFLAGS = $(shell sdl2-config --cflags)
 
@@ -31,7 +31,8 @@ CFILES = \
 	mouse.c \
 	tab.c \
 	texture.c \
-	init_player.c
+	init_player.c \
+	move.c
 
 OPATH = obj/
 
