@@ -10,6 +10,9 @@ typedef struct	s_fcoord
 
 typedef struct	s_player
 {
+	int							speed;
+	int							size;
+	int							image_id;
 	t_fcoord				coord;
 	t_fcoord				dest;
 }								t_player;

@@ -7,7 +7,9 @@ t_player		*init_player(void)
 
 	if(!(rslt = (t_player*)malloc(sizeof(t_player))))
 		return (NULL);
-	rslt->coord = (t_fcoord){0, 0};
-	rslt->dest = (t_fcoord){0,0};
+	rslt->coord = (t_fcoord){500, 500};
+	rslt->dest = rslt->coord;
+	rslt->speed = 2;
+	rslt->size = 50;
 	return (rslt);
 }

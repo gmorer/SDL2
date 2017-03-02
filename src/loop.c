@@ -36,8 +36,9 @@ static int						yolo_play(t_image *image_tab[IMAGE_LEN], t_player *player)
 	y = player->coord.y - (SCREEN_Y / 2);	
 	add_image(image_tab, (SDL_Rect){-x, -y, g_res[MAP]->src.w, g_res[MAP]->src.h},
 	    g_res[MAP], NULL, NULL, IMAGE);
-	add_image(image_tab, (SDL_Rect){SCREEN_X / 2, SCREEN_Y / 2, 50, 50},
+	add_image(image_tab, (SDL_Rect){SCREEN_X / 2, SCREEN_Y / 2, player->size, player->size},
 	    g_res[HERO], NULL, NULL, IMAGE);
+	player->image_id = 1;
 	return (1);
 }
 static int						yolo_exit(t_image *image_tab[IMAGE_LEN], t_player *player)
