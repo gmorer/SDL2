@@ -39,7 +39,7 @@ void	move_player(t_image *image_tab[IMAGE_LEN], t_player *player)
 	float		y;
 	float		calc;
 
-	if (abs(player->coord.x - player->dest.x) > 1 || abs(player->coord.y - player->dest.y) > 1)
+	if (fabs(player->coord.x - player->dest.x) > 1 || fabs(player->coord.y - player->dest.y) > 1)
 	{
 		calc = sqrt(powf(player->dest.x - player->coord.x, 2) + powf(player->dest.y - player->coord.y, 2));
 		x = (player->dest.x - player->coord.x) / calc;
