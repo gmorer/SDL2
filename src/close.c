@@ -7,7 +7,7 @@ t_texture			*g_res[RES_LEN];
 
 void		delet_one_image(t_image *image_tab[IMAGE_LEN], int i)
 {
-	if (image_tab[i]->type == TEXT)
+	if (image_tab[i]->type == TEXT && image_tab[i]->texture)
 		SDL_DestroyTexture(image_tab[i]->texture->texture);
 	free(image_tab[i]);
 	image_tab[i] = NULL;

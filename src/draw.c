@@ -13,7 +13,7 @@ int   draw(t_image *image_tab[IMAGE_LEN])
 		if (image_tab[i]->is_on && image_tab[i]->texture_after)
 			SDL_RenderCopy(g_renderer, image_tab[i]->texture_after->texture,
 					&(image_tab[i]->texture->src), &(image_tab[i]->coord));
-		else
+		else if (image_tab[i]->texture)
 			SDL_RenderCopy(g_renderer, image_tab[i]->texture->texture,
 					&(image_tab[i]->texture->src), &(image_tab[i]->coord));
 		i++;
