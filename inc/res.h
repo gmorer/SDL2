@@ -1,6 +1,7 @@
 #ifndef RES_H
 # define RES_H
 
+# include "struct.h"
 # include "texture.h"
 
 enum {
@@ -13,7 +14,7 @@ enum {
 	RES_LEN
 };
 
-extern t_texture *g_res[RES_LEN];
+extern struct s_texture *g_res[RES_LEN];
 
 void	init_res(void);
 

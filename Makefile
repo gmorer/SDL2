@@ -43,6 +43,7 @@ OBJ = $(addprefix $(OPATH), $(OFILES))
 HPATH = inc/
 
 HFILES = \
+	inc/struct.h \
 	inc/event.h \
 	inc/image.h \
 	inc/inc.h \

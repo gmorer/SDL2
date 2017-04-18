@@ -2,15 +2,10 @@
 # define TEXTURE_H
 
 # include "inc.h"
+# include "struct.h"
 
-typedef struct	s_texture
-{
-	SDL_Texture		*texture;
-	SDL_Rect			src;
-}								t_texture;
-
-t_texture *load_bmp(char *path);
-t_texture *load_png(char *path);
-t_texture *load_txt(char *txt, SDL_Color color);
+struct s_texture *load_bmp(char *path);
+struct s_texture *load_png(char *path);
+struct s_texture *load_txt(char *txt, SDL_Color color);
 
 #endif

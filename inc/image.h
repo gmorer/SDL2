@@ -1,28 +1,18 @@
 #ifndef BUTTON_H
 # define BUTTON_H
 
+# include "struct.h"
 # include "texture.h"
 # include "player.h"
-
-# define IMAGE_LEN 50
 
 enum {
 	TEXT,
 	IMAGE,
 	BUTTON
 };
-
-typedef struct s_image
-{
-	SDL_Rect			coord;
-	t_texture			*texture;
-	t_texture			*texture_after;
-	int						(*function)(struct s_image *image_tab[IMAGE_LEN], t_player *player);
-	int						is_on;
-	int						type;
-}              t_image;
-
-void  add_image(t_image *image_tab[IMAGE_LEN], SDL_Rect coord, t_texture *texture,
-		    t_texture *texture_after, int (*function)(t_image *image_tab[IMAGE_LEN], t_player *player), int is_interactive);
-
+/*
+void  add_image(struct s_image *image_tab[IMAGE_LEN], SDL_Rect coord, struct s_texture *texture,
+		    struct s_texture *texture_after,
+				int (*function)(struct s_image *image_tab[IMAGE_LEN], struct s_player *player), int is_interactive);
+*/
 #endif
