@@ -99,6 +99,5 @@ void    loop(t_player *player)
 		SDL_RenderPresent(g_renderer);
 		n = clock() - time;
 		g_fps = (int)(1 / (n / CLOCKS_PER_SEC));
-		printf("%d\n", g_fps);
 	}
 }

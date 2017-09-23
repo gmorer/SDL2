@@ -47,7 +47,8 @@ void	move_player(t_image *image_tab[IMAGE_LEN], t_player *player)
 	{
 		calc = sqrt(powf(player->dest.x - player->coord.x, 2) + powf(player->dest.y - player->coord.y, 2));
 		game_speed = 20 * g_fps / 5000;
-		printf("%f\n", game_speed);
+		if (game_speed == 0)
+			game_speed = 60;
 		x = (player->dest.x - player->coord.x) / calc;
 		y = (player->dest.y - player->coord.y) / calc;
 		x = x * player->speed / game_speed;
