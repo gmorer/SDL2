@@ -1,5 +1,7 @@
 #include "inc.h"
 
+int		g_fps;
+
 void	print_map(t_image *image_tab[IMAGE_LEN], t_player *player)
 {
 	int		x;
@@ -38,15 +40,18 @@ void	move_player(t_image *image_tab[IMAGE_LEN], t_player *player)
 	float		x;
 	float		y;
 	float		calc;
+	float		game_speed;
 
 	move_dest(image_tab, player);
 	if (fabs(player->coord.x - player->dest.x) > 1 || fabs(player->coord.y - player->dest.y) > 1)
 	{
 		calc = sqrt(powf(player->dest.x - player->coord.x, 2) + powf(player->dest.y - player->coord.y, 2));
+		game_speed = 20 * g_fps / 5000;
+		printf("%f\n", game_speed);
 		x = (player->dest.x - player->coord.x) / calc;
 		y = (player->dest.y - player->coord.y) / calc;
-		x = x * player->speed;
-		y = y * player->speed;
+		x = x * player->speed / game_speed;
+		y = y * player->speed / game_speed;
 		player->coord.x += x;
 		player->coord.y += y;
 		image_tab[player->image_id]->coord.x = SCREEN_X / 2 - image_tab[player->image_id]->coord.w / 2;

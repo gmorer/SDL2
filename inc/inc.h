@@ -17,9 +17,10 @@
 # include "image.h"
 # include "player.h"
 
-extern SDL_Window *g_window;
+extern SDL_Window	*g_window;
 extern SDL_Renderer *g_renderer;
-extern TTF_Font *g_font;
+extern TTF_Font		*g_font;
+extern int			g_fps;
 
 /*
 int		draw(t_image *button_tab[IMAGE_LEN]);

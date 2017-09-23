@@ -1,12 +1,14 @@
+#include <time.h>
 #include "inc.h"
 #include "image.h"
 #include "texture.h"
 #include "event.h"
 #include "res.h"
 
-SDL_Window    *g_window;
-SDL_Renderer  *g_renderer;
-t_texture			*g_res[RES_LEN];
+SDL_Window		*g_window;
+SDL_Renderer	*g_renderer;
+t_texture		*g_res[RES_LEN];
+int				g_fps;
 
 static int						yolo(t_image *image_tab[IMAGE_LEN], t_player *player)
 {
@@ -70,6 +72,8 @@ static int   test_menu(t_image *image_tab[IMAGE_LEN], t_player *player)
 void    loop(t_player *player)
 {
 	SDL_Event	event;
+	clock_t		time;
+	double		n;
 	t_image		*image_tab[IMAGE_LEN];
 	int				i;
 
@@ -82,6 +86,7 @@ void    loop(t_player *player)
 	test_menu(image_tab, player);
 	while(1)
 	{
+		time = clock();
 		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
@@ -92,5 +97,8 @@ void    loop(t_player *player)
 		move_player(image_tab, player);
 		draw(image_tab);
 		SDL_RenderPresent(g_renderer);
+		n = clock() - time;
+		g_fps = (int)(1 / (n / CLOCKS_PER_SEC));
+		printf("%d\n", g_fps);
 	}
 }

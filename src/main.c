@@ -4,10 +4,11 @@
 #include "event.h"
 #include <stdio.h>
 
-SDL_Window    *g_window;
-SDL_Renderer  *g_renderer;
-TTF_Font			*g_font;
-t_key					*g_key;
+SDL_Window		*g_window;
+SDL_Renderer 	*g_renderer;
+TTF_Font		*g_font;
+t_key			*g_key;
+int				g_fps;
 
 static int  init_SDL(void)
 {
@@ -56,6 +57,7 @@ int   main(int argc, char **argv)
 		return (1);
 	}
 	init_res();
+	g_fps = 60;
 	g_key = (t_key*)malloc(sizeof(t_key));
 	g_key->right_button = 0;
   loop(player);
