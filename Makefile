@@ -10,11 +10,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = line
+NAME = Minesweeper
 
 CC = clang
 
-CFLAGS = -Werror -Wall -Wextra
+CFLAGS = -Werror -Wall -Wextra -g
 
 LDLIBS = $(shell sdl2-config --libs) -lSDL2 -lSDL2_ttf -lSDL2_image -lm
 
@@ -23,16 +23,13 @@ LDFLAGS = $(shell sdl2-config --cflags)
 CPATH = src/
 
 CFILES = \
-	close.c \
-	draw.c \
-	init_res.c \
-	loop.c \
 	main.c \
-	mouse.c \
-	tab.c \
-	texture.c \
-	init_player.c \
-	move.c
+	map_generator.c \
+	loop.c \
+	game.c \
+	menu.c \
+	options.c \
+	init_sdl.c
 
 OPATH = obj/
 
@@ -43,13 +40,7 @@ OBJ = $(addprefix $(OPATH), $(OFILES))
 HPATH = inc/
 
 HFILES = \
-	inc/struct.h \
-	inc/event.h \
-	inc/image.h \
-	inc/inc.h \
-	inc/res.h \
-	inc/texture.h \
-	inc/player.h
+	inc/inc.h
 
 INC = $(addprefix -I , $(HPATH))
 
