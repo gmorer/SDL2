@@ -1,5 +1,14 @@
 #include "inc.h"
 
+SDL_Window	*g_window;
+
+void	exit_function()
+{
+	SDL_DestroyWindow(g_window);
+	SDL_Quit();
+	exit(0);
+}
+
 int		main()
 {
 	srand(time(NULL));

@@ -29,7 +29,8 @@ CFILES = \
 	game.c \
 	menu.c \
 	options.c \
-	init_sdl.c
+	init_sdl.c \
+	event.c
 
 OPATH = obj/
 

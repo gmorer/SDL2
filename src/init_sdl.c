@@ -19,7 +19,7 @@ static int	print_ttf_error()
 int		init_sdl()
 {
 	g_window = NULL;
-	g_renderer = NULL;
+	g_surface = NULL;
 	g_font = NULL;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -28,8 +28,8 @@ int		init_sdl()
 			SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, SDL_WINDOW_SHOWN);
 	if (!g_window)
 		return (print_error());
-	g_renderer = SDL_CreateRenderer( g_window, -1, SDL_RENDERER_ACCELERATED );
-	if (!g_renderer)
+		g_surface = SDL_GetWindowSurface(g_window);
+	if (!g_surface)
 		return (print_error());
 	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	if( TTF_Init() == -1 )

@@ -18,7 +18,7 @@ typedef struct	s_point
 }				t_point;
 
 extern SDL_Window	*g_window;
-extern SDL_Renderer *g_renderer;
+extern SDL_Surface	*g_surface;
 extern TTF_Font		*g_font;
 
 int		init_sdl();
@@ -27,5 +27,7 @@ int		loop();
 void	display_menu(void);
 void	display_game(void);
 void	display_options(void);
+void	exit_function(void);
+void	event(void);
 
 #endif
