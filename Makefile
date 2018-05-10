@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Minesweeper
+NAME = Inner
 
 CC = clang
 
@@ -41,7 +41,8 @@ OBJ = $(addprefix $(OPATH), $(OFILES))
 HPATH = inc/
 
 HFILES = \
-	inc/inc.h
+	inc/inc.h \
+	inc/menu.h
 
 INC = $(addprefix -I , $(HPATH))
 

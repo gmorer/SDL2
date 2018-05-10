@@ -1,4 +1,5 @@
 #include "inc.h"
+#include "menu.h"
 
 SDL_Window		*g_window;
 SDL_Surface 	*g_surface;
@@ -15,7 +16,7 @@ int	loop()
 	{
 		event();
 		if (mode == MENU)
-			display_menu();
+			display_menu(NULL, NULL);
 		else if (mode == INGAME)
 			display_game();
 		else if (mode == OPTIONS)

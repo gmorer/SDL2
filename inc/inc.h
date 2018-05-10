@@ -17,14 +17,21 @@ typedef struct	s_point
 	int	y;
 }				t_point;
 
+typedef struct	s_game
+{
+	char	x;
+	char	y;
+	char	*map;
+}				t_game;
+
 extern SDL_Window	*g_window;
 extern SDL_Surface	*g_surface;
 extern TTF_Font		*g_font;
+extern t_game		g_game;
 
 int		init_sdl();
 char	**map_generator(int x, int y, int mine, t_point start);
 int		loop();
-void	display_menu(void);
 void	display_game(void);
 void	display_options(void);
 void	exit_function(void);
