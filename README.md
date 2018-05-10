@@ -1,4 +1,4 @@
-# Minesweeper
+# Inner
 
 SDL 2 game
 
