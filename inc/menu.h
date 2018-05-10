@@ -3,6 +3,8 @@
 
 # include "inc.h"
 
+# define MENU_MAX_ENTRY 9
+
 typedef enum {BUTTON, SCROLL} e_menu_type;
 
 typedef struct	s_menu_entry
@@ -14,6 +16,6 @@ typedef struct	s_menu_entry
 
 }				t_menu_entry;
 
-void display_menu(SDL_Surface *background, t_menu_entry *entry);
+void display_menu(SDL_Surface *background, t_menu_entry *entry, char len);
 
 # endif

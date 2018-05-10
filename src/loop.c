@@ -16,7 +16,7 @@ int	loop()
 	{
 		event();
 		if (mode == MENU)
-			display_menu(NULL, NULL);
+			display_menu(NULL, NULL, 4);
 		else if (mode == INGAME)
 			display_game();
 		else if (mode == OPTIONS)

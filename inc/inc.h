@@ -9,6 +9,7 @@
 # include <stdlib.h>
 # include <time.h>
 # include <stdio.h>
+# include <limits.h>
 
 
 typedef struct	s_point

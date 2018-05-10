@@ -25,7 +25,8 @@ int		init_sdl()
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		return (print_error());
 	g_window = SDL_CreateWindow("line", SDL_WINDOWPOS_UNDEFINED,
-			SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, SDL_WINDOW_SHOWN);
+			SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y,
+			SDL_WINDOW_SHOWN);
 	if (!g_window)
 		return (print_error());
 		g_surface = SDL_GetWindowSurface(g_window);
