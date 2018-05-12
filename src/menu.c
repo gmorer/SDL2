@@ -50,29 +50,6 @@ static SDL_Surface	*default_background(void)
 	return (result);
 }
 
-static void	draw_buttons(t_menu_entry *entry, char len, char selected_index)
-{
-	char	index;
-	int		space_between;
-	int		y;
-	int		button_y;
-
-	(void)selected_index;
-	button_y = 50;
-	index = 0;
-	space_between = (SCREEN_Y - button_y * len + 1) / (len + 1);
-	(void)entry;
-	while (index < len)
-	{
-		y = space_between * (index + 1) + button_y * index;
-		SDL_FillRect(g_surface,
-			&(SDL_Rect){SCREEN_X / 2 - 100, y, 200, button_y},
-			SDL_MapRGB(g_surface->format, 100, 100, 0)
-		);
-		index++;	
-	}
-}
-
 void	display_menu(SDL_Surface *background, t_menu_entry *entry, char len)
 {
 	static char	index = 0;

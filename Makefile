@@ -28,6 +28,7 @@ CFILES = \
 	loop.c \
 	game.c \
 	menu.c \
+	menu_buttons.c \
 	options.c \
 	init_sdl.c \
 	event.c

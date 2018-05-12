@@ -4,6 +4,7 @@
 # include "inc.h"
 
 # define MENU_MAX_ENTRY 9
+# define LABEL_MAX_LEN 256
 
 typedef enum {BUTTON, SCROLL} e_menu_type;
 
@@ -16,6 +17,7 @@ typedef struct	s_menu_entry
 
 }				t_menu_entry;
 
-void display_menu(SDL_Surface *background, t_menu_entry *entry, char len);
+void	draw_buttons(t_menu_entry *entry, char len, char selected_inex);
+void	display_menu(SDL_Surface *background, t_menu_entry *entry, char len);
 
 # endif
