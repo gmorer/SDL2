@@ -10,7 +10,7 @@ typedef enum {BUTTON, SCROLL} e_menu_type;
 
 typedef struct	s_menu_entry
 {
-	char		*name;
+	char		name[LABEL_MAX_LEN];
 	e_menu_type type;
 	char 		value;
 	void		(*action)(char c);
