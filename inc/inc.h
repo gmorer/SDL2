@@ -36,6 +36,6 @@ int		loop();
 void	display_game(void);
 void	display_options(void);
 void	exit_function(void);
-void	event(void);
+void	event(void (*f)(SDL_Event, void*), void *data);
 
 #endif

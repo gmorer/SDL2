@@ -1,6 +1,6 @@
 #include "inc.h"
 
-void	event(void)
+void	event(void (*f)(SDL_Event, void*), void* data)
 {
 	SDL_Event	event;
 
@@ -8,6 +8,8 @@ void	event(void)
 	{
 		if (event.type == SDL_QUIT)
 			exit_function();
+		if (data)
+			f(event, data);
 	}
 	return ;
 }

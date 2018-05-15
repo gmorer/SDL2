@@ -42,7 +42,7 @@ static SDL_Surface	*default_background(void)
 		gmask,
 		bmask,
 		amask
-	);
+	);;;
 	SDL_FillRect(result,
 		&(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y},
 		SDL_MapRGB(result->format, 0, 0, 255)
@@ -50,11 +50,24 @@ static SDL_Surface	*default_background(void)
 	return (result);
 }
 
+static void	menu_event(SDL_Event event, void *index)
+{
+	if (event.type == SDL_KEYUP)
+	{
+		if (event.key.keysym.sym == SDLK_DOWN)
+			(*(char*)index)++;
+		if (event.key.keysym.sym == SDLK_UP && *((char*)index))
+			(*(char*)index)--;
+	}
+	return ;
+}
+
 void	display_menu(SDL_Surface *background, t_menu_entry *entry, char len)
 {
 	static char	index = 0;
 	
-	background = background ? background : default_background();
+	if (len > MENU_MAX_ENTRY)
+		return ;
 	/*
 	if (!background || !entry) // set default background
 	{
@@ -62,8 +75,10 @@ void	display_menu(SDL_Surface *background, t_menu_entry *entry, char len)
 		return;
 	}
 	*/
-	if (len > MENU_MAX_ENTRY)
-		return ;
+	background = background ? background : default_background();
+	event(&menu_event, &index);
+	if (index == len)
+		index = len - 1;
 	SDL_BlitSurface(
 		background,
 		&(SDL_Rect){0, 0, background->w, background->h},

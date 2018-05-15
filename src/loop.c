@@ -7,6 +7,11 @@ TTF_Font		*g_font;
 
 enum {MENU, INGAME, OPTIONS};
 
+/*
+ *	/!\ you ave to use the event() function on time by loop /!\
+ *			default: event(0, NULL);
+ */
+
 int	loop()
 {
 	char	mode;
@@ -14,7 +19,7 @@ int	loop()
 	mode = MENU;
 	while (1)
 	{
-		event();
+//		event(0, NULL);
 		if (mode == MENU)
 			display_menu(NULL, NULL, 4);
 		else if (mode == INGAME)
