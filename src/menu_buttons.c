@@ -16,11 +16,10 @@ static int			get_char_size(void)
 	return (w / alphabet_len);	
 }
 
-static void draw_one_button(int y, int button_y, int button_len,int char_size,
-	char selected)
+static void draw_one_button(t_menu_entry entry, int y, int button_y,
+	int button_len,int char_size, char selected)
 {
 	SDL_Surface	*label;
-	char		text[] = "12678";
 	size_t		max_len;
 	size_t		text_len;
 	int			margin;
@@ -37,17 +36,19 @@ static void draw_one_button(int y, int button_y, int button_len,int char_size,
 		SDL_MapRGB(g_surface->format, 100, 100, 0)
 	);
 	max_len = button_len / char_size;
-	text_len = strlen(text);
+	text_len = strlen(entry.name);
 	if (text_len > 3 && max_len < text_len)
 	{
-		printf("text_len:%lu, max_len:%lu\n", text_len, max_len);
-		text[max_len - 3] = '.';
-		text[max_len - 2] = '.';
-		text[max_len - 1] = '.';
-		text[max_len] = '\0';
+		entry.name[max_len - 3] = '.';
+		entry.name[max_len - 2] = '.';
+		entry.name[max_len - 1] = '.';
+		entry.name[max_len] = '\0';
+		margin = 0;
 	}
-	margin = (button_len - text_len * char_size) / 2;
-	label = TTF_RenderText_Solid(g_font, text, (SDL_Color){0, 0, 0, 255});
+	else
+		margin = (button_len - text_len * char_size) / 2;
+	label = TTF_RenderText_Solid(g_font, entry.name,
+		(SDL_Color){0, 0, 0, 255});
 	if (!label)
 		return ;
 	SDL_BlitSurface(label, NULL, g_surface,
@@ -57,12 +58,12 @@ static void draw_one_button(int y, int button_y, int button_len,int char_size,
 
 void		draw_buttons(t_menu_entry *entry, char len, char selected_index)
 {
-	char	index;
-	int		space_between;
-	int		y;
-	int		button_y;
-	int		button_len;
-	int		char_size;;
+	unsigned char	index;
+	int				space_between;
+	int				y;
+	int				button_y;
+	int				button_len;
+	int				char_size;;
 
 	(void)selected_index;
 	(void)entry;
@@ -74,7 +75,7 @@ void		draw_buttons(t_menu_entry *entry, char len, char selected_index)
 	while (index < len)
 	{
 		y = space_between * (index + 1) + button_y * index;
-		draw_one_button(y, button_y, button_len, char_size,
+		draw_one_button(entry[index], y, button_y, button_len, char_size,
 			selected_index == index);
 		index++;	
 	}
