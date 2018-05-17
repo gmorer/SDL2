@@ -12,13 +12,21 @@ enum {MENU, INGAME, OPTIONS};
  *			default: event(0, NULL);
  */
 
+static int	menu_exit(int value)
+{
+	(void)value;
+	exit_function();
+	return (0);
+}
+
 int	loop()
 {
 	char			mode;
 	t_menu_entry	menu[] = {
+	(t_menu_entry){"INNER", TITLE, 0, 0},
 	(t_menu_entry){"Jouer!", BUTTON, 0, 0},
 	(t_menu_entry){"Option", BUTTON, 0, 0},
-	(t_menu_entry){"Quitter", BUTTON, 0, 0}
+	(t_menu_entry){"Quitter", BUTTON, 4, &menu_exit}
 	};
 
 	mode = MENU;
@@ -26,7 +34,7 @@ int	loop()
 	{
 //		event(0, NULL);
 		if (mode == MENU)
-			display_menu(NULL, menu, 3);
+			display_menu(NULL, menu, 4);
 		else if (mode == INGAME)
 			display_game();
 		else if (mode == OPTIONS)

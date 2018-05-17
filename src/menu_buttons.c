@@ -8,7 +8,7 @@ static int			get_char_size(void)
 {
 	int		w;
 	char	*alphabet = "abcdefghijklmnopqrstuvwxyz ";
-	char	alphabet_len = 27;
+	int		alphabet_len = 27;
 
 	TTF_SizeText(g_font, alphabet, &w, NULL);
 	if (!w)
@@ -17,7 +17,7 @@ static int			get_char_size(void)
 }
 
 static void draw_one_button(t_menu_entry entry, int y, int button_y,
-	int button_len,int char_size, char selected)
+	int button_len,int char_size, int selected)
 {
 	SDL_Surface	*label;
 	size_t		max_len;
@@ -26,15 +26,18 @@ static void draw_one_button(t_menu_entry entry, int y, int button_y,
 	int			x_start;
 
 	x_start = SCREEN_X / 2 - button_len / 2;
-	if (selected)
+	if (entry.type == BUTTON)
+	{
+		if (selected)
+			SDL_FillRect(g_surface,
+				&(SDL_Rect){x_start - 5, y -5, button_len + 10, button_y + 10},
+				SDL_MapRGB(g_surface->format, 0, 0, 0)
+			);
 		SDL_FillRect(g_surface,
-			&(SDL_Rect){x_start - 5, y -5, button_len + 10, button_y + 10},
-			SDL_MapRGB(g_surface->format, 0, 0, 0)
+			&(SDL_Rect){x_start, y, button_len, button_y},
+			SDL_MapRGB(g_surface->format, 100, 100, 0)
 		);
-	SDL_FillRect(g_surface,
-		&(SDL_Rect){x_start, y, button_len, button_y},
-		SDL_MapRGB(g_surface->format, 100, 100, 0)
-	);
+	}
 	max_len = button_len / char_size;
 	text_len = strlen(entry.name);
 	if (text_len > 3 && max_len < text_len)
@@ -56,17 +59,14 @@ static void draw_one_button(t_menu_entry entry, int y, int button_y,
 	SDL_FreeSurface(label);
 }
 
-void		draw_buttons(t_menu_entry *entry, char len, char selected_index)
+void		draw_buttons(t_menu_entry *entry, int len, int selected_index)
 {
-	unsigned char	index;
-	int				space_between;
-	int				y;
-	int				button_y;
-	int				button_len;
-	int				char_size;;
+	int	index;
+	int	space_between;
+	int	button_y;
+	int	button_len;
+	int	char_size;;
 
-	(void)selected_index;
-	(void)entry;
 	button_len = 200;
 	button_y = 50;
 	char_size = get_char_size();
@@ -74,9 +74,9 @@ void		draw_buttons(t_menu_entry *entry, char len, char selected_index)
 	space_between = (SCREEN_Y - button_y * len + 1) / (len + 1);
 	while (index < len)
 	{
-		y = space_between * (index + 1) + button_y * index;
-		draw_one_button(entry[index], y, button_y, button_len, char_size,
-			selected_index == index);
+		draw_one_button(entry[index],
+			space_between * (index + 1) + button_y * index,
+			button_y, button_len, char_size, selected_index == index);
 		index++;	
 	}
 }
