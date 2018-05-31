@@ -1,5 +1,5 @@
-#include "inc.h"
-#include "menu.h"
+#include "../inc/inc.h"
+#include "../inc/menu.h"
 
 SDL_Surface	*g_surface;
 TTF_Font	*g_font;
@@ -16,8 +16,56 @@ static int			get_char_size(void)
 	return (w / alphabet_len);	
 }
 
+static void draw_one_title(t_menu_entry entry, int title_y, int char_size)
+{
+	SDL_Surface	*title;
+	size_t		title_len;
+	int			start_x;
+
+	if (!entry.name)
+		return ;
+	title_len = strlen(entry.name) * char_size;
+	if (title_len > SCREEN_X)
+		return ;
+	title = TTF_RenderText_Solid(g_font, entry.name,
+		(SDL_Color){0, 0, 0, 255});
+	if (!title)
+		return ;
+	start_x = SCREEN_X / 2 - title_len / 2;
+	SDL_BlitSurface(title, NULL, g_surface,
+		&(SDL_Rect){start_x, title_y, 0, 0});
+	SDL_FreeSurface(title);
+}
+
+static void draw_one_scroll(t_menu_entry entry, int y, int button_y,
+	int button_len, int char_size, int selected, int *index_x)
+{
+	int			x_start;
+
+	x_start = SCREEN_X / 2 - button_len / 2;
+	if (selected)
+	{
+		SDL_FillRect(g_surface,
+			&(SDL_Rect){x_start + (*index_x == 1 ? button_len / 2 + 5 : -5),
+			y - 5, button_len / 2 + 5, button_y + 10},
+			SDL_MapRGB(g_surface->format, 0, 0, 0)
+		);
+		SDL_FillRect(g_surface,
+			&(SDL_Rect){x_start, y, button_len / 2 - 5, button_y},
+			SDL_MapRGB(g_surface->format, 100, 100, 0)
+		);
+		SDL_FillRect(g_surface,
+			&(SDL_Rect){x_start + button_len / 2 + 10,
+			y, button_len / 2 - 5, button_y},
+			SDL_MapRGB(g_surface->format, 100, 100, 0)
+		);
+	}
+	else
+		draw_one_title(entry, y, char_size);
+}
+
 static void draw_one_button(t_menu_entry entry, int y, int button_y,
-	int button_len,int char_size, int selected)
+	int button_len, int char_size, int selected)
 {
 	SDL_Surface	*label;
 	size_t		max_len;
@@ -30,7 +78,7 @@ static void draw_one_button(t_menu_entry entry, int y, int button_y,
 	{
 		if (selected)
 			SDL_FillRect(g_surface,
-				&(SDL_Rect){x_start - 5, y -5, button_len + 10, button_y + 10},
+				&(SDL_Rect){x_start - 5, y - 5, button_len + 10, button_y + 10},
 				SDL_MapRGB(g_surface->format, 0, 0, 0)
 			);
 		SDL_FillRect(g_surface,
@@ -59,7 +107,8 @@ static void draw_one_button(t_menu_entry entry, int y, int button_y,
 	SDL_FreeSurface(label);
 }
 
-void		draw_buttons(t_menu_entry *entry, int len, int selected_index)
+void		draw_buttons(t_menu_entry *entry, int len, int selected_index,
+	int *index_x)
 {
 	int	index;
 	int	space_between;
@@ -74,9 +123,19 @@ void		draw_buttons(t_menu_entry *entry, int len, int selected_index)
 	space_between = (SCREEN_Y - button_y * len + 1) / (len + 1);
 	while (index < len)
 	{
-		draw_one_button(entry[index],
-			space_between * (index + 1) + button_y * index,
-			button_y, button_len, char_size, selected_index == index);
+		if (entry[index].type == BUTTON)
+			draw_one_button(entry[index],
+				space_between * (index + 1) + button_y * index,
+				button_y, button_len, char_size, selected_index == index);
+		if (entry[index].type == TITLE)
+			draw_one_title(entry[index],
+				space_between * (index + 1) + button_y * index,
+				char_size);
+		if (entry[index].type == SCROLL)
+			draw_one_scroll(entry[index],
+				space_between * (index + 1) + button_y * index,
+				button_y, button_len, char_size, selected_index == index,
+				index_x);
 		index++;	
 	}
 }

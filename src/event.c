@@ -1,4 +1,4 @@
-#include "inc.h"
+#include "../inc/inc.h"
 
 void	event(void (*f)(SDL_Event, void*), void* data)
 {

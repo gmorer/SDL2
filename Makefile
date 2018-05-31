@@ -12,7 +12,7 @@
 
 NAME = Inner
 
-CC = clang
+CC = gcc
 
 CFLAGS = -Werror -Wall -Wextra -g
 

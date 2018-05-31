@@ -1,5 +1,5 @@
-#include "inc.h"
-#include "menu.h"
+#include "../inc/inc.h"
+#include "../inc/menu.h"
 
 SDL_Surface	*g_surface;
 
@@ -74,8 +74,15 @@ static void	menu_event(SDL_Event event, void *arg)
 			(*(int*)data->index)++;
 		if (event.key.keysym.sym == SDLK_UP && *((int*)(data->index)))
 			(*(int*)data->index)--;
+		if (event.key.keysym.sym == SDLK_RIGHT)
+			(*(int*)data->index_x) = 1;
+		if (event.key.keysym.sym == SDLK_LEFT)
+			(*(int*)data->index_x) = -1;
 		if (VALIDATE_KEY(event.key.keysym.sym) && data->action)
-			(*(int*)data->value) = data->action(*((int*)(data->value)));
+		{
+			(*(int*)data->value) += (*(int*)data->index_x);
+			data->action(*((int*)(data->value)));
+		}
 	}
 	return ;
 }
@@ -84,19 +91,22 @@ void	display_menu(SDL_Surface *background, t_menu_entry *entry, int len)
 {
 	static int	index = 0;
 	int			old_index;
+	static int	index_x = -1;
 	
 	if (len > MENU_MAX_ENTRY)
 		return ;
 	if (!entry) // set default background
 	{
 		index = 0;
+		index_x = -1;
 		return;
 	}
 	background = background ? background : default_background();
 	old_index = index;
 	index = dodge_title(entry, index, -1, len);
 	event(&menu_event,
-		&(t_menu_event){&index, &(entry[index].value), entry[index].action});
+		&(t_menu_event){&index, &index_x,
+		&(entry[index].value), entry[index].action});
 	index = dodge_title(entry, index, old_index, len);
 	if (index == len)
 		index = len - 1;
@@ -106,5 +116,5 @@ void	display_menu(SDL_Surface *background, t_menu_entry *entry, int len)
 		g_surface,
 		&(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y}
 	);
-	draw_buttons(entry, len, index);
+	draw_buttons(entry, len, index, &index_x);
 }

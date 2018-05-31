@@ -1,4 +1,4 @@
-#include "inc.h"
+#include "../inc/inc.h"
 
 SDL_Window	*g_window;
 

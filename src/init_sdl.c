@@ -1,4 +1,4 @@
-#include "inc.h"
+#include "../inc/inc.h"
 
 SDL_Window		*g_window;
 SDL_Renderer 	*g_renderer;
@@ -29,7 +29,7 @@ int		init_sdl()
 			SDL_WINDOW_SHOWN);
 	if (!g_window)
 		return (print_error());
-		g_surface = SDL_GetWindowSurface(g_window);
+	g_surface = SDL_GetWindowSurface(g_window);
 	if (!g_surface)
 		return (print_error());
 	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0xFF, 0xFF, 0xFF);

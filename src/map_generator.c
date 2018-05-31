@@ -1,4 +1,4 @@
-#include "inc.h"
+#include "../inc/inc.h"
 
 static void	print_map(char **map, int x, int y)
 {
