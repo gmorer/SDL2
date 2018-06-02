@@ -72,13 +72,13 @@ static void	menu_event(SDL_Event event, void *arg)
 	{
 		if (event.key.keysym.sym == SDLK_DOWN)
 			(*(int*)data->index)++;
-		if (event.key.keysym.sym == SDLK_UP && *((int*)(data->index)))
+		else if (event.key.keysym.sym == SDLK_UP && *((int*)(data->index)))
 			(*(int*)data->index)--;
-		if (event.key.keysym.sym == SDLK_RIGHT)
+		else if (event.key.keysym.sym == SDLK_RIGHT)
 			(*(int*)data->index_x) = 1;
-		if (event.key.keysym.sym == SDLK_LEFT)
+		else if (event.key.keysym.sym == SDLK_LEFT)
 			(*(int*)data->index_x) = -1;
-		if (VALIDATE_KEY(event.key.keysym.sym) && data->action)
+		else if (VALIDATE_KEY(event.key.keysym.sym) && data->action)
 		{
 			(*(int*)data->value) += (*(int*)data->index_x);
 			data->action(*((int*)(data->value)));
@@ -116,5 +116,6 @@ void	display_menu(SDL_Surface *background, t_menu_entry *entry, int len)
 		g_surface,
 		&(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y}
 	);
+	SDL_FreeSurface(background);
 	draw_buttons(entry, len, index, &index_x);
 }

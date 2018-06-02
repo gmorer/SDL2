@@ -18,13 +18,19 @@ static void	menu_exit(int value)
 	exit_function();
 }
 
+static void scrool_fn(int value)
+{
+	printf("new value: %d\n", value);
+	return ;
+}
+
 int	loop()
 {
 	char			mode;
 	t_menu_entry	menu[] = {
 	(t_menu_entry){"Super INNER", TITLE, 0, 0},
 	(t_menu_entry){"Jouer!", BUTTON, 0, 0},
-	(t_menu_entry){"SCROOL", SCROLL, 0, 0},
+	(t_menu_entry){"SCROOL", SCROLL, 0, &scrool_fn},
 	(t_menu_entry){"Option", BUTTON, 0, 0},
 	(t_menu_entry){"Quitter", BUTTON, 4, &menu_exit}
 	};

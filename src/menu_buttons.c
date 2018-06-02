@@ -37,55 +37,25 @@ static void draw_one_title(t_menu_entry entry, int title_y, int char_size)
 	SDL_FreeSurface(title);
 }
 
-static void draw_one_scroll(t_menu_entry entry, int y, int button_y,
-	int button_len, int char_size, int selected, int *index_x)
-{
-	int			x_start;
-
-	x_start = SCREEN_X / 2 - button_len / 2;
-	if (selected)
-	{
-		SDL_FillRect(g_surface,
-			&(SDL_Rect){x_start + (*index_x == 1 ? button_len / 2 + 5 : -5),
-			y - 5, button_len / 2 + 5, button_y + 10},
-			SDL_MapRGB(g_surface->format, 0, 0, 0)
-		);
-		SDL_FillRect(g_surface,
-			&(SDL_Rect){x_start, y, button_len / 2 - 5, button_y},
-			SDL_MapRGB(g_surface->format, 100, 100, 0)
-		);
-		SDL_FillRect(g_surface,
-			&(SDL_Rect){x_start + button_len / 2 + 10,
-			y, button_len / 2 - 5, button_y},
-			SDL_MapRGB(g_surface->format, 100, 100, 0)
-		);
-	}
-	else
-		draw_one_title(entry, y, char_size);
-}
-
 static void draw_one_button(t_menu_entry entry, int y, int button_y,
 	int button_len, int char_size, int selected)
 {
 	SDL_Surface	*label;
 	size_t		max_len;
 	size_t		text_len;
-	int			margin;
-	int			x_start;
+	int				margin;
+	int				x_start;
 
 	x_start = SCREEN_X / 2 - button_len / 2;
-	if (entry.type == BUTTON)
-	{
-		if (selected)
-			SDL_FillRect(g_surface,
-				&(SDL_Rect){x_start - 5, y - 5, button_len + 10, button_y + 10},
-				SDL_MapRGB(g_surface->format, 0, 0, 0)
-			);
+	if (selected)
 		SDL_FillRect(g_surface,
-			&(SDL_Rect){x_start, y, button_len, button_y},
-			SDL_MapRGB(g_surface->format, 100, 100, 0)
+			&(SDL_Rect){x_start - 5, y - 5, button_len + 10, button_y + 10},
+			SDL_MapRGB(g_surface->format, 0, 0, 0)
 		);
-	}
+	SDL_FillRect(g_surface,
+		&(SDL_Rect){x_start, y, button_len, button_y},
+		SDL_MapRGB(g_surface->format, 100, 100, 0)
+	);
 	max_len = button_len / char_size;
 	text_len = strlen(entry.name);
 	if (text_len > 3 && max_len < text_len)
@@ -105,6 +75,60 @@ static void draw_one_button(t_menu_entry entry, int y, int button_y,
 	SDL_BlitSurface(label, NULL, g_surface,
 		&(SDL_Rect){x_start + margin, y, 0, 0});
 	SDL_FreeSurface(label);
+}
+
+static void draw_one_scroll(t_menu_entry entry, int y, int button_y,
+	int button_len, int char_size, int selected, int *index_x)
+{
+	int			x_start;
+	char		value[12];
+	size_t		len;
+	SDL_Surface	*label;
+
+	len = (sprintf(value, "%d",  entry.value) + 2) * char_size;
+	x_start = SCREEN_X / 2 - button_len / 2 ;
+	if (selected)
+	{
+		// el selection
+		SDL_FillRect(g_surface,
+			&(SDL_Rect){x_start + (*index_x == 1 ? button_len / 2 + 5 + len / 2: -5 - len / 2) ,
+			y - 5, button_len / 2 + 5, button_y + 10},
+			SDL_MapRGB(g_surface->format, 0, 0, 0)
+		);
+		// less button
+		SDL_FillRect(g_surface,
+			&(SDL_Rect){x_start - len / 2, y, button_len / 2 - 5, button_y},
+			SDL_MapRGB(g_surface->format, 100, 100, 0)
+		);
+		// less icon -
+		SDL_FillRect(g_surface,
+			&(SDL_Rect){x_start - len / 2 + (button_len / 2 - (button_y - 10)) / 2, y + button_y / 2 - 2, button_y - 10, 4},
+			SDL_MapRGB(g_surface->format, 0, 0, 0)
+		);
+		// plus button
+		SDL_FillRect(g_surface,
+			&(SDL_Rect){x_start + button_len / 2 + 10 + len / 2,
+			y, button_len / 2 - 5, button_y},
+			SDL_MapRGB(g_surface->format, 100, 100, 0)
+		);
+		// plus icon -
+		SDL_FillRect(g_surface,
+			&(SDL_Rect){x_start + button_len / 2 + 10 + len / 2 + (button_len / 2 - (button_y - 10)) / 2, y + button_y / 2 - 2, button_y - 10, 4},
+			SDL_MapRGB(g_surface->format, 0, 0, 0)
+		);
+		// plus icon |
+		SDL_FillRect(g_surface,
+		&(SDL_Rect){x_start + button_len / 2 + 10 + len / 2  + button_len / 4 - 2, y + 5,   4, button_y - 10},
+			SDL_MapRGB(g_surface->format, 0, 0, 0)
+		);
+		label = TTF_RenderText_Solid(g_font, value, (SDL_Color){0, 0, 0, 255 });
+		if (!label)
+			return ;
+		SDL_BlitSurface(label, NULL, g_surface, &(SDL_Rect){SCREEN_X / 2 - len / 2 + char_size,  y, len, button_y});
+		SDL_FreeSurface(label);
+	}
+	else
+		draw_one_button(entry, y, button_y, button_len, char_size, 0);
 }
 
 void		draw_buttons(t_menu_entry *entry, int len, int selected_index,
