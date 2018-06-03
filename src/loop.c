@@ -40,7 +40,8 @@ int	loop()
 	{
 //		event(0, NULL);
 		if (mode == MENU)
-			display_menu(NULL, menu, 5);
+			//display_menu(NULL, &(SDL_Rect){0, 0, SCREEN_X / 2, SCREEN_Y / 2}, g_font, menu, 5);
+			display_menu(NULL, NULL, g_font, menu, 5);
 		else if (mode == INGAME)
 			display_game();
 		else if (mode == OPTIONS)

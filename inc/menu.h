@@ -29,8 +29,8 @@ typedef struct	s_menu_entry
 
 }				t_menu_entry;
 
-void	draw_buttons(t_menu_entry *entry, int len, int selected_index,
+void	draw_buttons(SDL_Rect *rect, TTF_Font *font, t_menu_entry *entry, int len, int selected_index,
 	int *index_x);
-void	display_menu(SDL_Surface *background, t_menu_entry *entry, int len);
+void	display_menu(SDL_Surface *background, SDL_Rect *rect, TTF_Font *font, t_menu_entry *entry, int len);
 
 # endif

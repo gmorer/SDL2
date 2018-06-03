@@ -87,7 +87,7 @@ static void	menu_event(SDL_Event event, void *arg)
 	return ;
 }
 
-void	display_menu(SDL_Surface *background, t_menu_entry *entry, int len)
+void	display_menu(SDL_Surface *background,  SDL_Rect *rect, TTF_Font *font, t_menu_entry *entry, int len)
 {
 	static int	index = 0;
 	int			old_index;
@@ -101,6 +101,8 @@ void	display_menu(SDL_Surface *background, t_menu_entry *entry, int len)
 		index_x = -1;
 		return;
 	}
+	if (!rect)
+		rect = &(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y};
 	background = background ? background : default_background();
 	old_index = index;
 	index = dodge_title(entry, index, -1, len);
@@ -117,5 +119,5 @@ void	display_menu(SDL_Surface *background, t_menu_entry *entry, int len)
 		&(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y}
 	);
 	SDL_FreeSurface(background);
-	draw_buttons(entry, len, index, &index_x);
+	draw_buttons(rect, font, entry, len, index, &index_x);
 }
