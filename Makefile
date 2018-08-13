@@ -31,7 +31,8 @@ CFILES = \
 	menu_buttons.c \
 	options.c \
 	init_sdl.c \
-	event.c
+	event.c \
+	file_selector.c
 
 OPATH = obj/
 
@@ -43,7 +44,8 @@ HPATH = inc/
 
 HFILES = \
 	inc/inc.h \
-	inc/menu.h
+	inc/menu.h \
+	inc/file_selector.h
 
 INC = $(addprefix -I , $(HPATH))
 

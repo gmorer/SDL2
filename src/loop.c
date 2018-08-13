@@ -1,5 +1,6 @@
 #include "../inc/inc.h"
 #include "../inc/menu.h"
+#include "../inc/file_selector.h"
 
 SDL_Window		*g_window;
 SDL_Surface 	*g_surface;
@@ -24,6 +25,12 @@ static void scrool_fn(int value)
 	return ;
 }
 
+static void launch_selector(int value)
+{
+	(void)value;
+	file_selector(NULL);
+}
+
 int	loop()
 {
 	char			mode;
@@ -32,6 +39,7 @@ int	loop()
 	(t_menu_entry){"Jouer!", BUTTON, 0, 0},
 	(t_menu_entry){"SCROOL", SCROLL, 0, &scrool_fn},
 	(t_menu_entry){"Option", BUTTON, 0, 0},
+	(t_menu_entry){"Selector", BUTTON, 4, &launch_selector},
 	(t_menu_entry){"Quitter", BUTTON, 4, &menu_exit}
 	};
 
@@ -41,7 +49,7 @@ int	loop()
 //		event(0, NULL);
 		if (mode == MENU)
 			//display_menu(NULL, &(SDL_Rect){0, 0, SCREEN_X / 2, SCREEN_Y / 2}, g_font, menu, 5);
-			display_menu(NULL, NULL, g_font, menu, 5);
+			display_menu(NULL, NULL, g_font, menu, 6);
 		else if (mode == INGAME)
 			display_game();
 		else if (mode == OPTIONS)
