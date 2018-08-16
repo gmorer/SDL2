@@ -32,7 +32,8 @@ CFILES = \
 	options.c \
 	init_sdl.c \
 	event.c \
-	file_selector.c
+	file_selector.c \
+	sdl_lib.c
 
 OPATH = obj/
 

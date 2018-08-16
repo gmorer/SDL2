@@ -114,7 +114,7 @@ void	display_menu(SDL_Surface *background,  SDL_Rect *rect, TTF_Font *font, t_me
 		index = len - 1;
 	SDL_BlitSurface(
 		background,
-		&(SDL_Rect){0, 0, background->w, background->h},
+		NULL,
 		g_surface,
 		&(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y}
 	);

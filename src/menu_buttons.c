@@ -3,18 +3,6 @@
 
 SDL_Surface	*g_surface;
 
-static int			get_char_size(TTF_Font *font)
-{
-	int		w;
-	char	*alphabet = "abcdefghijklmnopqrstuvwxyz ";
-	int		alphabet_len = 27;
-
-	TTF_SizeText(font, alphabet, &w, NULL);
-	if (!w)
-		return (20);
-	return (w / alphabet_len);	
-}
-
 static void draw_one_title(SDL_Rect *rect, TTF_Font *font, t_menu_entry entry, int title_y, int char_size)
 {
 	SDL_Surface	*title;
@@ -42,8 +30,8 @@ static void draw_one_button(SDL_Rect *rect, TTF_Font *font, t_menu_entry entry, 
 	SDL_Surface	*label;
 	size_t		max_len;
 	size_t		text_len;
-	int				margin;
-	int				x_start;
+	int			margin;
+	int			x_start;
 
 	x_start = rect->x + rect->w / 2 - button_len / 2;
 	if (selected)

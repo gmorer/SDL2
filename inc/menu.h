@@ -5,10 +5,6 @@
 
 # define MENU_MAX_ENTRY 9
 # define LABEL_MAX_LEN 256
-# define VALIDATE_KEY(i)	(i == SDLK_SPACE || \
-							i == SDLK_KP_ENTER || \
-							i == SDLK_RETURN || \
-							i == SDLK_e )
 
 typedef enum {BUTTON, TITLE, SCROLL} e_menu_type;
 

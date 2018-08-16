@@ -11,6 +11,10 @@
 # include <stdio.h>
 # include <limits.h>
 
+# define VALIDATE_KEY(i)	(i == SDLK_SPACE || \
+							i == SDLK_KP_ENTER || \
+							i == SDLK_RETURN || \
+							i == SDLK_e )
 
 typedef struct	s_point
 {
@@ -37,5 +41,6 @@ void	display_game(void);
 void	display_options(void);
 void	exit_function(void);
 void	event(void (*f)(SDL_Event, void*), void *data);
+int     get_char_size(TTF_Font *font);
 
 #endif
