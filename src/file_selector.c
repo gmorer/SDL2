@@ -27,11 +27,12 @@ static char	*free_everything(SDL_Surface *files_list, char **files, char *select
 	if (!selected)
 	{
 		free(path);
+		free(files);
 		return NULL;
 	}
 	path_len = strlen(path);
 	selected_len = strlen(selected);
-	result = malloc((path_len + selected_len + 1) * sizeof(char));
+	result = malloc((path_len + selected_len + 2) * sizeof(char));
 	free(files);
 	strcpy(result, path);
 	result[path_len] = '/';
