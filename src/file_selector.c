@@ -3,7 +3,22 @@
 TTF_Font	*g_font;
 SDL_Window		*g_window;
 
-static char	*free_everything(SDL_Surface *files_list, char **files, char *selected, char *path)
+
+static char	*check_file(t_selector_settings settings, char *path)
+{
+	struct stat	statbuf;
+
+	if (access(path, R_OK) == -1)
+		return "error"; // TODO error display
+	if (stat(path, &statbuf) == -1)
+		return "error";
+	if (S_ISDIR(statbuf.st_mode))
+		return file_selector(path, settings);
+	return path;
+}
+
+static char	*free_everything(SDL_Surface *files_list, char **files, char *selected, char *path,
+	t_selector_settings settings)
 {
 	char	*result;
 	size_t	path_len;
@@ -24,7 +39,7 @@ static char	*free_everything(SDL_Surface *files_list, char **files, char *select
 	printf("result: %s\n", result);
 	SDL_FreeSurface(files_list);
 	free(path);
-	return (result);
+	return (check_file(settings, result));
 }
 
 static char	*home_dir()
@@ -47,6 +62,11 @@ static void	print_files(char **files, size_t len)
 		index++;
 	}
 	return ;
+}
+
+static int	strcmp_wrapper(const void *str1, const void *str2)
+{
+	return strcmp(*(const char**)str1, *(const char**)str2);
 }
 
 static char **get_files(char **path, size_t *len)
@@ -83,6 +103,7 @@ static char **get_files(char **path, size_t *len)
 	}
 	print_files(files, index);
 	*len = index;
+	qsort(files, index, sizeof(char*), &strcmp_wrapper);
 	return files;
 }
 
@@ -141,27 +162,27 @@ static void	event_handler(SDL_Event event, void *data)
 	return ;
 }
 
-static void	display_it(SDL_Surface *father, SDL_Surface *files_list, t_selector_settings settings,
+static void	display_it(SDL_Surface *files_list, t_selector_settings settings,
 	size_t index, size_t top_index, int height)
 {
 	SDL_Rect				tmp_rect;
 
 	tmp_rect = (SDL_Rect){settings.position.x, settings.position.y,
 		settings.position.w, settings.position.h};
-	SDL_FillRect(father, &tmp_rect, settings.background_color);
+	SDL_FillRect(settings.father, &tmp_rect, settings.background_color);
 	tmp_rect = (SDL_Rect){settings.position.x,
 		(index - top_index) * height + settings.position.y,
 		settings.position.w - settings.padding, height};
-	SDL_FillRect(father, &tmp_rect, settings.selector_color);
+	SDL_FillRect(settings.father, &tmp_rect, settings.selector_color);
 	tmp_rect = (SDL_Rect){settings.position.x, settings.position.y,
 		settings.position.w, settings.position.h};
 	SDL_BlitSurface(files_list, &(SDL_Rect){0, top_index * height, files_list->w,
-		settings.position.h}, father, &tmp_rect);
+		settings.position.h}, settings.father, &tmp_rect);
 	SDL_UpdateWindowSurface(g_window);
 	return ;
 }
 
-char *file_selector(char *path, SDL_Surface *father, t_selector_settings settings)
+char *file_selector(char *path, t_selector_settings settings)
 {
 	size_t					len; // number of file in the directory, length of files
 	int						height; // height of one line
@@ -184,7 +205,7 @@ char *file_selector(char *path, SDL_Surface *father, t_selector_settings setting
 	fill_surface(files_list, files, len, height, settings);
 	files_display = settings.position.h / height;
 	// Begining
-	display_it(father, files_list, settings, index, top_index, height);
+	display_it(files_list, settings, index, top_index, height);
 	// End
 	while (1)
 	{
@@ -192,8 +213,10 @@ char *file_selector(char *path, SDL_Surface *father, t_selector_settings setting
 		event(&event_handler, &action);
 		if (action != NO_EVENT)
 		{
-			if (action == ESCAPE) return free_everything(files_list, files, NULL, path);
-			if (action == ENTER) return free_everything(files_list, files, files[index], path);
+			if (action == ESCAPE)
+				return free_everything(files_list, files, NULL, path, settings);
+			if (action == ENTER)
+				return free_everything(files_list, files, files[index], path, settings);
 			if (action == UP && index > 0)
 			{
 				index -= 1;
@@ -208,7 +231,7 @@ char *file_selector(char *path, SDL_Surface *father, t_selector_settings setting
 					top_index += 1;
 				//usleep(70000);
 			}
-			display_it(father, files_list, settings, index, top_index, height);
+			display_it(files_list, settings, index, top_index, height);
 		}
 	}
 	return NULL;

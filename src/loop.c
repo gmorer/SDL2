@@ -28,7 +28,7 @@ static void scrool_fn(int value)
 static void launch_selector(int value)
 {
 	(void)value;
-	file_selector(NULL, g_surface, (t_selector_settings){
+	file_selector(NULL, (t_selector_settings){g_surface,
 		(SDL_Rect){10, 10, g_surface->w - 20, g_surface->h - 20}, 5,
 		SDL_MapRGB(g_surface->format, 77, 77, 77),
 		SDL_MapRGB(g_surface->format, 255, 111, 0), (SDL_Color){0, 0, 0, 255}});

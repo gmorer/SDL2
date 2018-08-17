@@ -1,8 +1,8 @@
 #ifndef INC_H
 # define INC_H
 
-# define SCREEN_X 640
-# define SCREEN_Y 480
+# define SCREEN_X 1280
+# define SCREEN_Y 	960
 # define MINE 10
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_ttf.h>
