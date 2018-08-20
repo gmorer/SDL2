@@ -168,20 +168,33 @@ static void	display_it(SDL_Surface *files_list, t_selector_settings settings,
 {
 	SDL_Rect				tmp_rect;
 
-	tmp_rect = (SDL_Rect){settings.position.x, settings.position.y,
-		settings.position.w, settings.position.h};
+	tmp_rect = (SDL_Rect){settings.position.x, settings.position.y + height,
+		settings.position.w, settings.position.h - height};
 	SDL_FillRect(settings.father, &tmp_rect, settings.background_color);
 	tmp_rect = (SDL_Rect){settings.position.x,
-		(index - top_index) * height + settings.position.y,
+		(index - top_index) * height + settings.position.y + height,
 		settings.position.w - settings.padding, height};
 	SDL_FillRect(settings.father, &tmp_rect, settings.selector_color);
-	tmp_rect = (SDL_Rect){settings.position.x, settings.position.y,
+	tmp_rect = (SDL_Rect){settings.position.x, settings.position.y + height,
 		settings.position.w, settings.position.h};
 	SDL_BlitSurface(files_list, &(SDL_Rect){0, top_index * height, files_list->w,
 		settings.position.h}, settings.father, &tmp_rect);
 	SDL_UpdateWindowSurface(g_window);
 	return ;
 }
+
+static void	display_path(t_selector_settings settings, char *path, int height)
+{
+	SDL_Surface				*path_surface;
+
+	path_surface = TTF_RenderText_Solid(g_font, path, settings.text_color);
+	SDL_FillRect(settings.father, &(SDL_Rect){settings.position.x, settings.position.y,
+		settings.position.w, height}, settings.path_background);
+	SDL_BlitSurface(path_surface, NULL, settings.father, &(SDL_Rect){settings.position.x,
+		settings.position.y, settings.position.w, height});
+	SDL_FreeSurface(path_surface);
+}
+
 
 char *file_selector(char *path, t_selector_settings settings)
 {
@@ -205,6 +218,7 @@ char *file_selector(char *path, t_selector_settings settings)
 		height * len, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 	fill_surface(files_list, files, len, height, settings);
 	files_display = settings.position.h / height;
+	display_path(settings, path, height);
 	// Begining
 	display_it(files_list, settings, index, top_index, height);
 	// End

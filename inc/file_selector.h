@@ -17,6 +17,7 @@ typedef struct	s_selector_settings
 	int			padding;
 	unsigned int	background_color;
 	unsigned int	selector_color;
+	unsigned int	path_background;
 	SDL_Color	text_color;
 
 }				t_selector_settings;

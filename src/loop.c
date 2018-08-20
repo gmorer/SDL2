@@ -32,7 +32,8 @@ static void launch_selector(int value)
 	path = file_selector(NULL, (t_selector_settings){g_surface,
 		(SDL_Rect){10, 10, g_surface->w - 20, g_surface->h - 20}, 5,
 		SDL_MapRGB(g_surface->format, 77, 77, 77),
-		SDL_MapRGB(g_surface->format, 255, 111, 0), (SDL_Color){0, 0, 0, 255}});
+		SDL_MapRGB(g_surface->format, 255, 111, 0),
+		SDL_MapRGB(g_surface->format, 30, 30, 30), (SDL_Color){0, 0, 0, 255}});
 	if (path)
 		free(path);
 }
