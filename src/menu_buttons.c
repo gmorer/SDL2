@@ -9,8 +9,6 @@ static void draw_one_title(SDL_Rect *rect, TTF_Font *font, t_menu_entry entry, i
 	size_t		title_len;
 	int			x_start;
 
-	if (!entry.name)
-		return ;
 	title_len = strlen(entry.name) * char_size;
 	if ((int)title_len > rect->w)
 		return ;
