@@ -1,7 +1,5 @@
-# Inner
+# Title
 
-SDL 2 game
+[![Build Status](https://travis-ci.org/gmorer/SDL2.svg?branch=master)](https://travis-ci.org/gmorer/SDL2)
 
-## Game info
-
-
+SDL 2 menu for future projects.
