@@ -215,9 +215,9 @@ static void	display_it(SDL_Surface *files_list, t_selector_settings settings,
 		settings.position.w - settings.padding, height};
 	SDL_FillRect(settings.father, &tmp_rect, settings.selector_color);
 	tmp_rect = (SDL_Rect){settings.position.x, settings.position.y + height,
-		settings.position.w, settings.position.h};
+		settings.position.w, settings.position.h - height};
 	SDL_BlitSurface(files_list, &(SDL_Rect){0, top_index * height, files_list->w,
-		settings.position.h}, settings.father, &tmp_rect);
+		settings.position.h - height}, settings.father, &tmp_rect);
 	SDL_UpdateWindowSurface(g_window);
 	return ;
 }
@@ -258,9 +258,7 @@ char *file_selector(char *path, t_selector_settings settings)
 	fill_surface(files_list, files, len, height, settings);
 	files_display = settings.position.h / height;
 	display_path(settings, path, height);
-	// Begining
 	display_it(files_list, settings, index, top_index, height);
-	// End
 	while (1)
 	{
 		action = NO_EVENT;
@@ -276,14 +274,12 @@ char *file_selector(char *path, t_selector_settings settings)
 				index -= 1;
 				if (index < top_index)
 				top_index -= 1;
-				//usleep(70000);
 			}
 			if (action == DOWN && index + 1 < len)
 			{
 				index += 1;
-				if (index >= files_display + top_index)
+				if (index >= files_display + top_index - 1)
 					top_index += 1;
-				//usleep(70000);
 			}
 			display_it(files_list, settings, index, top_index, height);
 		}
