@@ -4,6 +4,39 @@ TTF_Font	*g_font;
 SDL_Window		*g_window;
 
 
+
+// This do not wotk with file with "/" in the name :(
+static char	*remove_last(char *path)
+{
+	size_t len;
+	size_t index;
+
+	printf(path);
+	if(!path)
+		return path;
+	// Test if path is root
+	if(path[0] == '/' && !path[1])
+	{
+		return path;
+	}
+	printf("Hey\n");
+	len = strlen(path);
+	index = (size_t)(strrchr(path, '/') - path);
+	if (!index)
+	{
+		path[0] = '/';
+		path[1] = 0;
+		return path;
+	}
+	else if (len == index)
+	{
+		path[index] = 0;
+		index = (size_t)(strrchr(path, '/') - path);
+	}
+	path[index] = 0;
+	return path;
+}
+
 static char	*check_file(t_selector_settings settings, char *path)
 {
 	struct stat	statbuf;
@@ -16,6 +49,7 @@ static char	*check_file(t_selector_settings settings, char *path)
 		return file_selector(path, settings);
 	return path;
 }
+
 
 static char	*free_everything(SDL_Surface *files_list, char **files, char *selected, char *path,
 	t_selector_settings settings)
@@ -30,16 +64,21 @@ static char	*free_everything(SDL_Surface *files_list, char **files, char *select
 		free(files);
 		return NULL;
 	}
-	path_len = strlen(path);
-	selected_len = strlen(selected);
-	result = malloc((path_len + selected_len + 2) * sizeof(char));
+	if (!strcmp(selected, ".."))
+		result = remove_last(path);
+	else {
+		path_len = strlen(path);
+		path_len -= path_len == 1 ? 1 : 0;
+		selected_len = strlen(selected);
+		result = malloc((path_len + selected_len + 2) * sizeof(char));
+		strcpy(result, path);
+		result[path_len] = '/';
+		strcpy(result + path_len + 1, selected);
+		free(path);
+	}
 	free(files);
-	strcpy(result, path);
-	result[path_len] = '/';
-	strcpy(result + path_len + 1, selected);
 	printf("result: %s\n", result);
 	SDL_FreeSurface(files_list);
-	free(path);
 	return (check_file(settings, result));
 }
 
