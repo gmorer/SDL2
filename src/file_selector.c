@@ -11,7 +11,6 @@ static char	*remove_last(char *path)
 	size_t len;
 	size_t index;
 
-	printf(path);
 	if(!path)
 		return path;
 	// Test if path is root
@@ -19,7 +18,6 @@ static char	*remove_last(char *path)
 	{
 		return path;
 	}
-	printf("Hey\n");
 	len = strlen(path);
 	index = (size_t)(strrchr(path, '/') - path);
 	if (!index)
@@ -98,7 +96,7 @@ static void	print_files(char **files, size_t len)
 	index = 0;
 	while(index < len)
 	{
-		//printf("%s\n", files[index]);
+	//	printf("%s\n", files[index]);
 		index++;
 	}
 	return ;
