@@ -10,10 +10,10 @@ typedef enum {BUTTON, TITLE, SCROLL} e_menu_type;
 
 typedef struct	s_menu_event
 {
-	int		*index;
-	int		*index_x;
-	int 	*value;
-	void	(*action)(int c);
+	int			*index;
+	int			*index_x;
+	int 		*value;
+	void		(*action)(int c);
 }				t_menu_event;
 
 typedef struct	s_menu_entry
@@ -22,11 +22,20 @@ typedef struct	s_menu_entry
 	e_menu_type type;
 	int 		value;
 	void		(*action)(int c);
-
 }				t_menu_entry;
 
-void	draw_buttons(SDL_Rect *rect, TTF_Font *font, t_menu_entry *entry, int len, int selected_index,
+typedef struct	s_menu_settings
+{
+	SDL_Surface *background;
+	SDL_Rect	*position;
+	int			padding;
+	int			button_with;
+	int			button_height;
+	TTF_Font	*font;
+}				t_menu_settings;
+
+void	draw_buttons(t_menu_settings settings, t_menu_entry *entry, int len, int selected_index,
 	int *index_x);
-void	display_menu(SDL_Surface *background, SDL_Rect *rect, TTF_Font *font, t_menu_entry *entry, int len);
+void	display_menu(t_menu_settings settings, t_menu_entry *entry, int len);
 
 # endif

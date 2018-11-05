@@ -6,7 +6,7 @@
 #    By: gmorer <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/20 11:35:32 by gmorer            #+#    #+#              #
-#    Updated: 2016/11/22 11:58:26 by gmorer           ###   ########.fr        #
+#    Updated: 2018/11/05 12:24:42 by gmorer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = Inner
 
 CC = gcc
 
-CFLAGS = -Werror -Wall -Wextra -g
+CFLAGS = -Werror -Wall -Wextra -g -fsanitize=address
 
 LDLIBS = $(shell sdl2-config --libs) -lSDL2 -lSDL2_ttf -lSDL2_image -lm
 

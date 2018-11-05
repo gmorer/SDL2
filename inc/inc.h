@@ -1,16 +1,24 @@
 #ifndef INC_H
 # define INC_H
 
-# define SCREEN_X 1280
-# define SCREEN_Y 	960
-# define MINE 10
-# include <SDL2/SDL.h>
-# include <SDL2/SDL_ttf.h>
+# ifdef __APPLE__
+#  include <SDL.h>
+#  include <SDL_ttf.h>
+# else
+#  include <SDL2/SDL.h>
+#  include <SDL2/SDL_ttf.h>
+# endif
 # include <stdlib.h>
 # include <time.h>
 # include <stdio.h>
 # include <limits.h>
+# include <unistd.h>
 
+# define FALSE 0
+# define TRUE 1
+# define SCREEN_X 1280
+# define SCREEN_Y 960
+# define MINE 10
 # define VALIDATE_KEY(i)	(i == SDLK_SPACE || \
 							i == SDLK_KP_ENTER || \
 							i == SDLK_RETURN || \
