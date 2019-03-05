@@ -6,15 +6,15 @@
 #    By: gmorer <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/20 11:35:32 by gmorer            #+#    #+#              #
-#    Updated: 2018/11/05 12:24:42 by gmorer           ###   ########.fr        #
+#    Updated: 2019/03/05 18:26:42 by tet              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Inner
 
-CC = gcc
+CC = gcc -g
 
-CFLAGS = -Werror -Wall -Wextra -g -fsanitize=address
+CFLAGS = -Werror -Wall -Wextra
 
 LDLIBS = $(shell sdl2-config --libs) -lSDL2 -lSDL2_ttf -lSDL2_image -lm
 
@@ -33,7 +33,8 @@ CFILES = \
 	init_sdl.c \
 	event.c \
 	file_selector.c \
-	sdl_lib.c
+	sdl_lib.c \
+	alert.c
 
 OPATH = obj/
 

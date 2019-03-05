@@ -3,8 +3,6 @@
 TTF_Font	*g_font;
 SDL_Window		*g_window;
 
-
-
 // This do not wotk with file with "/" in the name :(
 static char	*remove_last(char *path)
 {
@@ -35,14 +33,23 @@ static char	*remove_last(char *path)
 	return path;
 }
 
-static char	*check_file(t_selector_settings settings, char *path)
+static char	*check_file(t_selector_settings settings, char *path, char *old_path)
 {
 	struct stat	statbuf;
 
 	if (access(path, R_OK) == -1)
-		return "error"; // TODO error display
+	{
+		free(path);
+		display_alert("error", "Cannot read the path", settings.father);
+		return file_selector(old_path, settings);
+	}
 	if (stat(path, &statbuf) == -1)
-		return "error";
+	{
+		free(path);
+		display_alert("error", "Cannot read the path's stats", settings.father);
+		return file_selector(old_path, settings);
+	}
+	free(old_path);
 	if (S_ISDIR(statbuf.st_mode))
 		return file_selector(path, settings);
 	return path;
@@ -63,7 +70,7 @@ static char	*free_everything(SDL_Surface *files_list, char **files, char *select
 		return NULL;
 	}
 	if (!strcmp(selected, ".."))
-		result = remove_last(path);
+		result = strdup(remove_last(path));
 	else {
 		path_len = strlen(path);
 		path_len -= path_len == 1 ? 1 : 0;
@@ -72,12 +79,11 @@ static char	*free_everything(SDL_Surface *files_list, char **files, char *select
 		strcpy(result, path);
 		result[path_len] = '/';
 		strcpy(result + path_len + 1, selected);
-		free(path);
 	}
 	free(files);
 	printf("result: %s\n", result);
 	SDL_FreeSurface(files_list);
-	return (check_file(settings, result));
+	return (check_file(settings, result, path));
 }
 
 static char	*home_dir()

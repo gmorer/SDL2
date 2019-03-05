@@ -50,5 +50,6 @@ void	display_options(void);
 void	exit_function(void);
 void	event(void (*f)(SDL_Event, void*), void *data);
 int     get_char_size(TTF_Font *font);
+int		display_alert(char *title, char *msg, SDL_Surface *father);
 
 #endif
