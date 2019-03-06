@@ -53,12 +53,12 @@ extern SDL_Surface	*g_surface;
 extern TTF_Font		*g_font;
 extern t_game		g_game;
 
+void exit_function(void);
 int		init_sdl();
 char	**map_generator(int x, int y, int mine, t_point start);
 int		loop();
 void	display_game(void);
 void	display_options(void);
-void	exit_function(void);
 void	event(void (*f)(SDL_Event, void*), void *data);
 int     get_char_size(TTF_Font *font);
 int		display_alert(char *title, char *msg, SDL_Surface *father);

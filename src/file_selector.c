@@ -258,7 +258,7 @@ char *file_selector(char *path, t_selector_settings settings)
 		return NULL; // TODO
 	height = TTF_FontHeight(g_font) + settings.padding;
 	files_list = SDL_CreateRGBSurface(0, settings.position.w - settings.padding,
-		height * len, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+		height * len, 32, RMASK, GMASK, BMASK, AMASK);
 	fill_surface(files_list, files, len, height, settings);
 	files_display = settings.position.h / height;
 	display_path(settings, path, height);
