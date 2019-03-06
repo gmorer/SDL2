@@ -28,37 +28,27 @@ static int			dodge_title(t_menu_entry *entry, int index,
 
 }
 
-static SDL_Surface	*default_background(void)
+static SDL_Surface	*default_background(t_menu_settings settings)
 {
-	unsigned int	rmask;
-	unsigned int	gmask;
-	unsigned int	bmask;
-	unsigned int	amask;
 	SDL_Surface		*result;
+	int w;
+	int h;
 
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    rmask = 0xff000000;
-    gmask = 0x00ff0000;
-    bmask = 0x0000ff00;
-    amask = 0x000000ff;
-#else
-    rmask = 0x000000ff;
-    gmask = 0x0000ff00;
-    bmask = 0x00ff0000;
-    amask = 0xff000000;
-#endif
+	w = settings.position ? settings.position->w : SCREEN_X;
+	h = settings.position ? settings.position->h : SCREEN_Y;
+
 	result = SDL_CreateRGBSurface(
 		0,
-		SCREEN_X,
-		SCREEN_Y,
+		w,
+		h,
 		32,
-		rmask,
-		gmask,
-		bmask,
-		amask
+		RMASK,
+		GMASK,
+		BMASK,
+		AMASK
 	);;;
 	SDL_FillRect(result,
-		&(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y},
+		&(SDL_Rect){0, 0, w, h},
 		SDL_MapRGB(result->format, 0, 0, 255)
 	);
 	return (result);
@@ -90,8 +80,7 @@ static void	menu_event(SDL_Event event, void *arg)
 
 void	display_menu(t_menu_settings settings, t_menu_entry *entry, int len)
 {
-	static int	index = 0;
-	int			old_index;
+	int		old_index;
 	static int	index_x = -1;
 	
 	// init_settings(&settings);
@@ -99,36 +88,41 @@ void	display_menu(t_menu_settings settings, t_menu_entry *entry, int len)
 		return ;
 	if (!entry) // set default background
 	{
-		index = 0;
+		settings.index = 0;
 		index_x = -1;
 		return;
 	}
 	if (!settings.font)
 		settings.font = g_font;
 	if (!settings.background)
-		settings.background = default_background();
+		settings.background = default_background(settings);
 	if (!settings.position)
 		settings.position = &(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y};
 	if (!settings.button_with)
 		settings.button_with = settings.position->w / 2;
 	if (!settings.button_height)
 		settings.button_height = TTF_FontHeight(settings.font) * 1.25;
-	old_index = index;
-	index = dodge_title(entry, index, -1, len);
-	event(&menu_event,
-		&(t_menu_event){&index, &index_x,
-		&(entry[index].value), entry[index].action});
-	if (index >= len)
-		index = len - 1;
-	index = dodge_title(entry, index, old_index, len);
-	if (index == len)
-		index = len - 1;
-	SDL_BlitSurface(
-		settings.background,
-		NULL,
-		g_surface,
-		&(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y}
-	);
+	while (!entry[len - 1].value)
+	{
+		old_index = settings.index;
+		settings.index = dodge_title(entry, settings.index, -1, len);
+		event(&menu_event,
+			&(t_menu_event){&(settings.index), &index_x,
+			&(entry[settings.index].value), entry[settings.index].action});
+		if (settings.index >= len)
+			settings.index = len - 1;
+		settings.index = dodge_title(entry, settings.index, old_index, len);
+		if (settings.index == len)
+			settings.index = len - 1;
+		SDL_BlitSurface(
+			settings.background,
+			NULL,
+			g_surface,
+			settings.position
+			//&(SDL_Rect){0, 0, SCREEN_X, SCREEN_Y}
+		);
+		draw_buttons(settings, entry, len, settings.index, &index_x);
+		SDL_UpdateWindowSurface(g_window);
+	}
 	SDL_FreeSurface(settings.background);
-	draw_buttons(settings, entry, len, index, &index_x);
 }

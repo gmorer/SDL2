@@ -8,7 +8,9 @@ static void draw_one_title(t_menu_settings settings, t_menu_entry entry, int tit
 	SDL_Surface	*title;
 	size_t		title_len;
 	int			x_start;
+	int h;
 
+	h = settings.position ? settings.position->y : 0;
 	title_len = strlen(entry.name) * char_size;
 	if ((int)title_len > settings.position->w)
 		return ;
@@ -17,8 +19,9 @@ static void draw_one_title(t_menu_settings settings, t_menu_entry entry, int tit
 	if (!title)
 		return ;
 	x_start = settings.position->w / 2 - title_len / 2;
+	x_start = settings.position->x + settings.position->w / 2 - title_len / 2;
 	SDL_BlitSurface(title, NULL, g_surface,
-		&(SDL_Rect){x_start, title_y, 0, 0});
+		&(SDL_Rect){x_start, h + title_y, 0, 0});
 	SDL_FreeSurface(title);
 }
 
@@ -30,15 +33,17 @@ static void draw_one_button(t_menu_settings settings, t_menu_entry entry, int y,
 	size_t		text_len;
 	int			margin;
 	int			x_start;
+	int h;
 
+	h = settings.position ? settings.position->y : 0;
 	x_start = settings.position->x + settings.position->w / 2 - settings.button_with / 2;
 	if (selected)
 		SDL_FillRect(g_surface,
-			&(SDL_Rect){x_start - 5, y - 5, settings.button_with + 10, settings.button_height + 10},
+			&(SDL_Rect){x_start - 5, h + y - 5, settings.button_with + 10, settings.button_height + 10},
 			SDL_MapRGB(g_surface->format, 0, 0, 0)
 		);
 	SDL_FillRect(g_surface,
-		&(SDL_Rect){x_start, y, settings.button_with, settings.button_height},
+		&(SDL_Rect){x_start, h + y, settings.button_with, settings.button_height},
 		SDL_MapRGB(g_surface->format, 100, 100, 0)
 	);
 	max_len = settings.button_with / char_size;
@@ -62,7 +67,7 @@ static void draw_one_button(t_menu_settings settings, t_menu_entry entry, int y,
 	if (!label)
 		return ;
 	SDL_BlitSurface(label, NULL, g_surface,
-		&(SDL_Rect){x_start + margin, y, 0, 0});
+		&(SDL_Rect){x_start + margin, h + y, 0, 0});
 	SDL_FreeSurface(label);
 }
 
@@ -74,7 +79,9 @@ static void draw_one_scroll(t_menu_settings settings, t_menu_entry entry, int y,
 	size_t		len;
 	SDL_Surface	*label;
 	int half_with;
+	int h;
 
+	h = settings.position ? settings.position->y : 0;
 	half_with = settings.button_with / 2;
 	len = (sprintf(value, "%d",  entry.value) + 2) * char_size;
 	x_start = settings.position->x + settings.position->w / 2 - half_with ;
@@ -83,38 +90,38 @@ static void draw_one_scroll(t_menu_settings settings, t_menu_entry entry, int y,
 		// el selection
 		SDL_FillRect(g_surface,
 			&(SDL_Rect){x_start + (*index_x == 1 ? half_with + 5 + len / 2: -5 - len / 2) ,
-			y - 5, half_with + 5, settings.button_height + 10},
+			h + y - 5, half_with + 5, settings.button_height + 10},
 			SDL_MapRGB(g_surface->format, 0, 0, 0)
 		);
 		// less button
 		SDL_FillRect(g_surface,
-			&(SDL_Rect){x_start - len / 2, y, half_with - 5, settings.button_height},
+			&(SDL_Rect){x_start - len / 2, h + y, half_with - 5, settings.button_height},
 			SDL_MapRGB(g_surface->format, 100, 100, 0)
 		);
 		// less icon -
 		SDL_FillRect(g_surface,
 			&(SDL_Rect){x_start - len / 2 + (half_with - (settings.button_height - 10)) / 2,
-			y + settings.button_height / 2 - 2, settings.button_height - 10, 4},
+			h + y + settings.button_height / 2 - 2, settings.button_height - 10, 4},
 			SDL_MapRGB(g_surface->format, 0, 0, 0)
 		);
 		// plus button
 		SDL_FillRect(g_surface,
 			&(SDL_Rect){x_start + half_with + 10 + len / 2,
-			y, half_with - 5, settings.button_height},
+			h + y, half_with - 5, settings.button_height},
 			SDL_MapRGB(g_surface->format, 100, 100, 0)
 		);
 		// plus icon -
 		SDL_FillRect(g_surface,
 			&(SDL_Rect){
 				x_start + half_with + 10 + len / 2 + (half_with - (settings.button_height - 10)) / 2,
-				y + settings.button_height / 2 - 2, settings.button_height - 10, 4
+				h + y + settings.button_height / 2 - 2, settings.button_height - 10, 4
 			},
 			SDL_MapRGB(g_surface->format, 0, 0, 0)
 		);
 		// plus icon |
 		SDL_FillRect(g_surface,
 			&(SDL_Rect){
-				x_start + half_with + 10 + len / 2  + settings.button_with / 4 - 2, y + 5,
+				x_start + half_with + 10 + len / 2  + settings.button_with / 4 - 2, h + y + 5,
 				4, settings.button_height - 10
 			},
 			SDL_MapRGB(g_surface->format, 0, 0, 0)
@@ -124,7 +131,7 @@ static void draw_one_scroll(t_menu_settings settings, t_menu_entry entry, int y,
 			return ;
 		SDL_BlitSurface(label, NULL, g_surface,
 			&(SDL_Rect){settings.position->x + settings.position->w / 2 - len / 2 + char_size,
-			y, len, settings.button_height});
+			h + y, len, settings.button_height});
 		SDL_FreeSurface(label);
 	}
 	else

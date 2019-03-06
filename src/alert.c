@@ -25,7 +25,7 @@ int display_alert(char *title, char *msg, SDL_Surface *father)
 
 	char_size = get_char_size(g_font);
 	message_len = (strlen(title) > strlen(msg) ? strlen(title) : strlen(msg)) * char_size;
-	error_box = SDL_CreateRGBSurface(0, message_len + ALERT_SIDE_PADDING,
+	error_box = SDL_CreateRGBSurface(0, message_len + ALERT_SIDE_PADDING * 2,
 		TTF_FontHeight(g_font) * 2 + ALERT_SIDE_PADDING * 4, 32,
 		0x00000000, 0x0000FF00, 0x00FF0000, 0xFF000000);
 	title_surface = TTF_RenderText_Solid(g_font, title, (SDL_Color){255, 255, 255, 255});

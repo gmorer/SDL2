@@ -31,6 +31,7 @@ typedef struct	s_menu_settings
 	int			padding;
 	int			button_with;
 	int			button_height;
+	int			index;
 	TTF_Font	*font;
 }				t_menu_settings;
 

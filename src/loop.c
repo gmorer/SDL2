@@ -16,13 +16,45 @@ enum {MENU, INGAME, OPTIONS};
 static void	menu_exit(int value)
 {
 	(void)value;
-	exit_function();
+	//exit_function();
 }
 
 static void scrool_fn(int value)
 {
 	printf("new value: %d\n", value);
 	return ;
+}
+
+static void options_btn(int value)
+{
+	int w;
+	int h;
+	SDL_Surface *background;
+
+	SDL_GetWindowSize(g_window, &w, &h);
+	background = SDL_CreateRGBSurface(0, w / 2, h / 2, 32, RMASK, GMASK, BMASK, AMASK);
+	SDL_FillRect(background, &(SDL_Rect){0, 0, background->w, background->h},
+			SDL_MapRGB(background->format, 0, 255, 0));
+	(void)value;
+	t_menu_entry	menu[] = {
+		(t_menu_entry){"Options", TITLE, 0, 0},
+		(t_menu_entry){"SCROOL", SCROLL, 0, &scrool_fn},
+		(t_menu_entry){"Fake button", BUTTON, 0, 0},
+		(t_menu_entry){"Retour", BUTTON, 0, &menu_exit}
+	};
+	t_menu_settings settings = (t_menu_settings){
+		background,
+		&(SDL_Rect){w / 4, h / 4, w / 2, h / 2},
+		//NULL,
+		0,		// padding
+		300,		// button_with
+		100,		// button_height
+		0,
+		g_font	// font
+	};
+	display_menu(settings, menu, 4);
+
+
 }
 
 static void launch_selector(int value)
@@ -40,54 +72,28 @@ static void launch_selector(int value)
 
 static void launch_main_menu()
 {
-	int init = FALSE;
-	static t_menu_entry	menu[] = {
+	t_menu_entry	menu[] = {
 		(t_menu_entry){"Super INNER", TITLE, 0, 0},
 		(t_menu_entry){"Jouer!", BUTTON, 0, 0},
 		(t_menu_entry){"SCROOL", SCROLL, 0, &scrool_fn},
-		(t_menu_entry){"Option", BUTTON, 0, 0},
+		(t_menu_entry){"Option", BUTTON, 0, &options_btn},
 		(t_menu_entry){"Selector", BUTTON, 4, &launch_selector},
-		(t_menu_entry){"Quitter", BUTTON, 4, &menu_exit}
+		(t_menu_entry){"Quitter", BUTTON, 0, &menu_exit}
 	};
-	static t_menu_settings settings = (t_menu_settings){
-		NULL,
-		NULL,
+	t_menu_settings settings = (t_menu_settings){
+		NULL,	// background
+		NULL,	// position
+		0,		// padding
+		300,		// button_with
+		100,		// button_height
 		0,
-		0,
-		0,
-		NULL
+		g_font	// font
 	};
-	if (!init) // initialize the struct because g_font is not a compile time var
-	{
-		settings = (t_menu_settings){
-			NULL,	// background
-			NULL,	// position
-			0,		// padding
-			200,		// button_with
-			99,		// button_height
-			g_font	// font
-		};
-		init = TRUE;
-	}
 	display_menu(settings, menu, 6);
 }
 
 int	loop()
 {
-	char			mode;
-
-	mode = MENU;
-	while (1)
-	{
-//		event(0, NULL);
-		if (mode == MENU)
-			//display_menu(NULL, &(SDL_Rect){0, 0, SCREEN_X / 2, SCREEN_Y / 2}, g_font, menu, 5);
-			launch_main_menu();
-		else if (mode == INGAME)
-			display_game();
-		else if (mode == OPTIONS)
-			display_options();
-		SDL_UpdateWindowSurface(g_window);	
-	}
+	launch_main_menu();
 	return (1);
 }
